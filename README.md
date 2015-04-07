@@ -26,40 +26,42 @@ var PrivateKey = bitmarkLib.PrivateKey;
 
 #### Instantiate
 
-Here is how we instantia a private key
+To instatiate a PrivateKey object:
 
 ```javascript
 var privateKey01 = new PrivateKey();
 ```
 
-There are 2 optional parameters for Private Key constructor, which are network and key type. The defaul for network is `livenet` and for key type is `ed25519`.
+There are 2 optional parameters for the PrivateKey constructor: network and key type. The default for network is `livenet`, and the default for key type is `ed25519`.
 
 ```javascript
 var privateKey02 = new PrivateKey('testnet');
 var privateKey03 = new PrivateKey('livenet', 'ed25519');
 ```
 
-We can also parse the private key from KIF string.
+To parse the private key from the KIF string:
 
 ```javascript
 var privateKey = PrivateKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
 ```
 
-or from buffer
+To parse the private key from the KIF string:
 
 ```javascript
 var privateKey = PrivateKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
 ```
 
-Buffer can be either hex string or Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
+The buffer can be either a hex string or Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
 
 #### Methods
-* toBuffer: return a Buffer object containing the private key
-* toString: return hex form of toBuffer
-* toKIF: return the private key in KIF
-* getNetwork: return either livenet or testnet based on the key
-* getKeyType: return only `ed25519` for now
-* getAddress: return address object which will be introduced next
+* *toBuffer()* — returns a Buffer object containing the private key
+* *toString()* — returns *toBuffer()* in hexidecimal format
+* *toKIF()* — returns the private key in KIF format.
+* *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
+* *getKeyType()* — returns the key system type (currently only `ed25519`)
+* *getAddress()* — returns an Address object (see next section)
+
+---
 
 ## Address
 
@@ -71,14 +73,14 @@ var Address = bitmarkLib.Address;
 
 #### Instantiate
 
-From String
+To instatiate an Address object from a hexidecimal string:
 
 ```javascript
 var address = new Address('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
 var sameAddress = Address.fromString('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
 ```
 
-From Buffer
+To instantiate an Address object from a Buffer object:
 
 ```javascript
 var buffer = new Buffer('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44', 'hex');
@@ -88,10 +90,10 @@ var sameAddress02 = Address.froMBuffer('73346e71883a09c0421e5d6caa473239c4438af7
 ```
 
 Note:
-* `network` and `keytype` are optional, the defaults are livenet and ed25519
-* When instantiate a Address from buffer using the constructor, input buffer object instead of hex
+* `network` and `keytype` are optional, the defaults are `livenet` and `ed25519`.
+* When instantiating aa Address from a Buffer object using the constructor function, input the Buffer object instead of a hexidecimal string value.
 
-Or from PrivateKey
+To instantiate an Address object from a PrivateKey:
 
 ```javascript
 var privateKey = PrivateKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
@@ -101,22 +103,23 @@ var address = privateKey.getAddress()
 #### Validation
 
 ```javascript
-Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;'); // return false because of bad address string
-Address.isValid('ayUWeSeJEcATAHQTBU1qkVcEh9V12cnfCeFWAh1Jq7NdVMjH5q', 'testnet'); // return false because of wrong network
-Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet'); // return true
+Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;'); // returns false because of bad address string
+Address.isValid('ayUWeSeJEcATAHQTBU1qkVcEh9V12cnfCeFWAh1Jq7NdVMjH5q', 'testnet'); // returns false because of wrong network
+Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet'); // returns true
 ```
 
 #### Methods
 
-* toString: return address string
-* getNetwork: return either livenet or testnet based on the address
-* getPublicKey: return public key hex string
-* getKeyType: return `ed25519`
+* *toString()* — returns the address as a hexidecimal string
+* *getNetwork()* — returns either `livenet` or `testnet`, depending on the address
+* *getPublicKey()* — returns a public key as a hexidecimal string value
+* *getKeyType()* — returns the key system type (currently only `ed25519`)
 
+---
 
 ## Records
 
-### Asset
+### Asset Record
 
 #### Set up
 
@@ -125,6 +128,8 @@ var Asset = bitmarkLib.Asset
 ```
 
 #### Instantiate
+
+To instatiate an Asset record object:
 
 ```javascript
 var asset = new Asset()
@@ -135,17 +140,18 @@ var asset = new Asset()
 ```
 
 #### Methods
-* getRPCMessage: return json object to be used for sending via RPC
-* isSigned: return `true` if the record is signed
-* getName
-* getDescription
-* getFingerprint
-* getRegistrant: return address object of registrant
-* getId: only available when the record is broadcasted via RPC
-* getTxId: only available when the record is broadcasted via RPC
+* *getRPCMessage()* — returns a json object for sending in an RPC message
+* *isSigned()* — returns `true` if the asset record is signed
+* *getName()* — returns the string value for an Asset's *Description* property
+* *getDescription()* — returns the string value for an Asset's *Description* property
+* *getFingerprint()* — returns the hexidecimal value for an Asset's *Fingerprint* property
+* *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property 
+* *getSignature()* — returns the Asset object's signature buffer
+* *getId()* — returns the Asset object's 'AssetIndex' as a string value (only available when the record is broadcast via RPC)
+* *getTxId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
 
 
-### Issue
+### Issue Record
 
 #### Set up
 
@@ -155,6 +161,8 @@ var Issue = bitmarkLib.Issue
 
 #### Instantiate
 
+To instatiate an Issue record object:
+
 ```javascript
 var issue = new Issue()
       .fromAsset(asset)
@@ -162,17 +170,19 @@ var issue = new Issue()
       .sign(privateKey);
 ```
 
-Node: `fromAsset` can receive either asset object of asset-id string
+Note: `fromAsset()` can receive either an Asset object or an *asset-id* string.
 
 #### Methods
-* getRPCMessage: return json object to be used for sending via RPC
-* isSigned: return `true` if the record is signed
-* getOwner: return owner address object
-* getSignature: return signature buffer
-* getAsset: return asset id string
-* getPaymentAddress: only available when the record is broadcasted via RPC
-* getTxId: only available when the record is broadcasted via RPC
+* *getRPCMessage()* — returns a json object for sending in an RPC message
+* *isSigned()* — returns `true` if the issue record is signed
+* *getOwner()* — returnss an Address object specifying the Issue record's *Owner* property
+* *getSignature()* — returns the Issue object's signature buffer
+* *getAsset()*: returns the Issue record's corresponding *AssetIndex* as a string value
+* *getPaymentAddress()* — only available when the record is broadcast via RPC
+* *getTxId()* — returns a hexadecimal string id for the Issue record (only available when the record is broadcast via RPC)
 
+
+---
 
 ### Transfer
 
@@ -184,6 +194,9 @@ var Transfer = bitmarkLib.Transfer
 
 #### Instantiate
 
+
+To instatiate a Transfer record object:
+
 ```javascript
 var transfer = new Transfer()
       .from(previousTransfer)
@@ -191,23 +204,29 @@ var transfer = new Transfer()
       .sign(privateKey);
 ```
 
-Node: `from` can receive either issue, transfer object, or id string
+Note: `from()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object. 
 
 #### Methods
-* getRPCMessage: return json object to be used for sending via RPC
-* isSigned: return `true` if the record is signed
-* getOwner: return owner address object
-* getSignature: return signature buffer
-* getPreTx: return previous transaction id string
-* getPaymentAddress: only available when the record is broadcasted via RPC
-* getTxId: only available when the record is broadcasted via RPC
+* *getRPCMessage()* — returns a json object for sending in an RPC message
+* *isSigned()* — returns `true` if the transfer record is signed
+* *getOwner()* —  returnss an Address object specifying the the Transfer record's *Owner* property
+* *getSignature()*: returns the Transfer object's signature buffer
+* *getPreTx()*: returns a hexadecimal string of a *TxId* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
+* *getPaymentAddress()* — only available when the record is broadcast via RPC
+* *getTxId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
+
+---
 
 ## RPC
+
 Under construction
+
+--
+
 
 # License
 
-Copyright (c) 2015-2015 Bitmark Inc (support@bitmark.com).
+Copyright (c) 2014-2015 Bitmark Inc (support@bitmark.com).
 
 Permission to use, copy, modify, and distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
