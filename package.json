@@ -20,12 +20,12 @@
     "bitmark",
     "lib"
   ],
-  "author": "Le Quy Quoc Cuong <cuongle@bitmark.com>",
+  "author": "Bitmark Inc <support@bitmark.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bitmark-inc/bitmark/issues"
+    "url": "https://github.com/bitmark-inc/bitmark-lib"
   },
-  "homepage": "https://github.com/bitmark-inc/bitmark",
+  "homepage": "https://github.com/bitmark-inc/bitmark-lib",
   "devDependencies": {
     "chai": "^2.1.2",
     "grunt": "^0.4.5",
