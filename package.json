@@ -1,0 +1,58 @@
+{
+  "name": "bitmark-lib",
+  "version": "0.0.1",
+  "description": "Bitmark library",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test",
+    "lib": "lib",
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bitmark-inc/bitmark"
+  },
+  "keywords": [
+    "bitmark",
+    "lib"
+  ],
+  "author": "Le Quy Quoc Cuong <cuongle@bitmark.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bitmark-inc/bitmark/issues"
+  },
+  "homepage": "https://github.com/bitmark-inc/bitmark",
+  "devDependencies": {
+    "chai": "^2.1.2",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.5.1",
+    "grunt-jsdoc": "^0.5.8",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.2.1",
+    "q": "^1.2.0"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "bigi": "^1.4.0",
+    "bs58": "^2.0.1",
+    "crypto-js": "^3.1.2",
+    "lodash": "^3.6.0",
+    "node-uuid": "^1.4.3",
+    "tweetnacl": "^0.13.0"
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
