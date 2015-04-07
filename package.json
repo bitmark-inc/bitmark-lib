@@ -1,6 +1,6 @@
 {
   "name": "bitmark-lib",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Bitmark library",
   "main": "index.js",
   "directories": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bitmark-inc/bitmark"
+    "url": "https://github.com/bitmark-inc/bitmark-lib"
   },
   "keywords": [
     "bitmark",
@@ -23,7 +23,7 @@
   "author": "Bitmark Inc <support@bitmark.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bitmark-inc/bitmark-lib"
+    "url": "https://github.com/bitmark-inc/bitmark-lib/issues"
   },
   "homepage": "https://github.com/bitmark-inc/bitmark-lib",
   "devDependencies": {
