@@ -5,7 +5,7 @@ The pure Javascript Bitmark library for node.js and browsers.
 # Install
 
 ```sh
-$ npm install pg
+$ npm install bitmark-lib
 ```
 
 # Set up
