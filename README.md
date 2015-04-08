@@ -32,7 +32,7 @@ To instatiate a PrivateKey object:
 var privateKey01 = new PrivateKey();
 ```
 
-There are 2 optional parameters for the PrivateKey constructor: network and key type. The default for network is `livenet`, and the default for key type is `ed25519`.
+There are 2 optional parameters for the PrivateKey constructor: *network* and *key type*. The default for *network* is `livenet`, and the default for *key type* is `ed25519`.
 
 ```javascript
 var privateKey02 = new PrivateKey('testnet');
@@ -73,15 +73,7 @@ var Address = bitmarkLib.Address;
 
 #### Instantiate
 
-<<<<<<< Updated upstream
 To instatiate an Address object from an address string:
-=======
-<<<<<<< HEAD
-To instatiate an Address object from a hexadecimal string:
-=======
-To instatiate an Address object from an address string:
->>>>>>> origin/master
->>>>>>> Stashed changes
 
 ```javascript
 var address = new Address('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
@@ -99,15 +91,7 @@ var sameAddress02 = Address.froMBuffer('73346e71883a09c0421e5d6caa473239c4438af7
 
 Note:
 * `network` and `keytype` are optional, the defaults are `livenet` and `ed25519`.
-<<<<<<< Updated upstream
 * When instantiating a Address from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
-=======
-<<<<<<< HEAD
-* When instantiating aa Address from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
-=======
-* When instantiating a Address from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
->>>>>>> origin/master
->>>>>>> Stashed changes
 
 To instantiate an Address object from a PrivateKey:
 
@@ -126,24 +110,10 @@ Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet')
 
 #### Methods
 
-<<<<<<< Updated upstream
 * *toString()* — returns the address as a string
 * *getNetwork()* — returns either `livenet` or `testnet`, depending on the address
 * *getPublicKey()* — returns the public key as a hexadecimal string value
 * *getKeyType()* — returns the key type (currently only `ed25519`)
-=======
-<<<<<<< HEAD
-* *toString()* — returns the address as a hexadecimal string
-* *getNetwork()* — returns either `livenet` or `testnet`, depending on the address
-* *getPublicKey()* — returns a public key as a hexadecimal string value
-* *getKeyType()* — returns the key system type (currently only `ed25519`)
-=======
-* *toString()* — returns the address as a string
-* *getNetwork()* — returns either `livenet` or `testnet`, depending on the address
-* *getPublicKey()* — returns the public key as a hexadecimal string value
-* *getKeyType()* — returns the key type (currently only `ed25519`)
->>>>>>> origin/master
->>>>>>> Stashed changes
 
 ---
 
@@ -175,15 +145,7 @@ var asset = new Asset()
 * *getName()* — returns the string value for an Asset's *Name* property
 * *getDescription()* — returns the string value for an Asset's *Description* property
 * *getFingerprint()* — returns the hexadecimal value for an Asset's *Fingerprint* property
-<<<<<<< Updated upstream
 * *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property
-=======
-<<<<<<< HEAD
-* *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property 
-=======
-* *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property
->>>>>>> origin/master
->>>>>>> Stashed changes
 * *getSignature()* — returns the Asset object's signature buffer
 * *getId()* — returns the Asset object's 'AssetIndex' as a string value (only available when the record is broadcast via RPC)
 * *getTxId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
