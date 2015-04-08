@@ -45,17 +45,17 @@ To parse the private key from the KIF string:
 var privateKey = PrivateKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
 ```
 
-To parse the private key from the KIF string:
+To parse the private key from buffer:
 
 ```javascript
 var privateKey = PrivateKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
 ```
 
-The buffer can be either a hex string or Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
+The buffer can be either a hex string or a Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
 
 #### Methods
 * *toBuffer()* — returns a Buffer object containing the private key
-* *toString()* — returns *toBuffer()* in hexidecimal format
+* *toString()* — returns *toBuffer()* in hexadecimal format
 * *toKIF()* — returns the private key in KIF format.
 * *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
 * *getKeyType()* — returns the key system type (currently only `ed25519`)
@@ -73,7 +73,7 @@ var Address = bitmarkLib.Address;
 
 #### Instantiate
 
-To instatiate an Address object from a hexidecimal string:
+To instatiate an Address object from an address string:
 
 ```javascript
 var address = new Address('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
@@ -91,7 +91,7 @@ var sameAddress02 = Address.froMBuffer('73346e71883a09c0421e5d6caa473239c4438af7
 
 Note:
 * `network` and `keytype` are optional, the defaults are `livenet` and `ed25519`.
-* When instantiating aa Address from a Buffer object using the constructor function, input the Buffer object instead of a hexidecimal string value.
+* When instantiating a Address from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
 
 To instantiate an Address object from a PrivateKey:
 
@@ -110,10 +110,10 @@ Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet')
 
 #### Methods
 
-* *toString()* — returns the address as a hexidecimal string
+* *toString()* — returns the address as a string
 * *getNetwork()* — returns either `livenet` or `testnet`, depending on the address
-* *getPublicKey()* — returns a public key as a hexidecimal string value
-* *getKeyType()* — returns the key system type (currently only `ed25519`)
+* *getPublicKey()* — returns the public key as a hexadecimal string value
+* *getKeyType()* — returns the key type (currently only `ed25519`)
 
 ---
 
@@ -142,10 +142,10 @@ var asset = new Asset()
 #### Methods
 * *getRPCMessage()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the asset record is signed
-* *getName()* — returns the string value for an Asset's *Description* property
+* *getName()* — returns the string value for an Asset's *Name* property
 * *getDescription()* — returns the string value for an Asset's *Description* property
-* *getFingerprint()* — returns the hexidecimal value for an Asset's *Fingerprint* property
-* *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property 
+* *getFingerprint()* — returns the hexadecimal value for an Asset's *Fingerprint* property
+* *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property
 * *getSignature()* — returns the Asset object's signature buffer
 * *getId()* — returns the Asset object's 'AssetIndex' as a string value (only available when the record is broadcast via RPC)
 * *getTxId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
