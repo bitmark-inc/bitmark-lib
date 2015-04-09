@@ -70,7 +70,8 @@ describe('Private Key', function(){
   var invalidKIF = {
     wrongKeyIndicator: 'eJT6wuVa6S28o7HwZHyU5KF2phBJwA2sQm3ay29qGX6grPTJWD',
     unknowKeyType: '5fqsbGCS8d1oztEsbkDxt5sEHn5oaJ7EgtRwy744BQb8LwSUT3',
-    wrongChecksum: 'cnuhWA1XJXgTYuH8udThP81RdgvUJ7tECow6Z3K8Kss8Tj7BWQ'
+    wrongChecksum: 'cnuhWA1XJXgTYuH8udThP81RdgvUJ7tECow6Z3K8Kss8Tj7BWQ',
+    wrongKeyLength: '3j8Cyvox4R7HKtCS8KfWFtsLWS4zz2rdmEvLv3dApcgNCnAo3XXz'
   };
   describe('Parse from KIF string', function(){
     it('should be able to parse the livenet KIF correctly', function(){
@@ -113,6 +114,40 @@ describe('Private Key', function(){
       expect(function(){
         return PrivateKey.fromKIF(invalidKIF.unknowKeyType);
       }).to.throw(Error);
+    });
+    it('show throw error on wrong key length', function(){
+      expect(function(){
+        return PrivateKey.fromKIF(invalidKIF.wrongKeyLength);
+      }).to.throw(Error);
+    });
+  });
+  describe('Build from buffer', function(){
+    it('should throw error if no buffer is inputed', function(){
+      expect(function(){
+        return PrivateKey.fromBuffer('testnet');
+      }).to.throw(Error);
+    });
+    it('should be able to create Private Key from buffer only', function(){
+      expect(function(){
+        return PrivateKey.fromBuffer('cbfa5516b0375ebf5a6c9401fa3933e7a95545193d11acdf161c439b480577b7');
+      }).to.not.throw();
+    });
+    it('use livenet for default network, ed25519 for default type', function(){
+      var privateKey = PrivateKey.fromBuffer('cbfa5516b0375ebf5a6c9401fa3933e7a95545193d11acdf161c439b480577b7');
+      expect(privateKey.getNetwork()).to.equal('livenet');
+      expect(privateKey.getType()).to.equal('ed25519');
+    });
+    it('shoule be able to create Private Key for livenet', function(){
+      var liveNetKey = validData.livenet;
+      var privateKey = PrivateKey.fromBuffer(liveNetKey.priKey, liveNetKey.network, liveNetKey.type);
+      expect(privateKey.toKIF()).to.equal(liveNetKey.kif);
+      expect(privateKey.getAddress().toString()).to.equal(liveNetKey.address);
+    });
+    it('shoule be able to create Private Key for testnet', function(){
+      var testNetKey = validData.testnet;
+      var privateKey = PrivateKey.fromBuffer(testNetKey.priKey, testNetKey.network, testNetKey.type);
+      expect(privateKey.toKIF()).to.equal(testNetKey.kif);
+      expect(privateKey.getAddress().toString()).to.equal(testNetKey.address);
     });
   });
 });
