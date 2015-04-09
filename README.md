@@ -51,14 +51,14 @@ To parse the private key from buffer:
 var privateKey = PrivateKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
 ```
 
-The buffer can be either a hex string or a Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
+The buffer can be either a hexadecimal string or a Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
 
 #### Methods
 * *toBuffer()* — returns a Buffer object containing the private key
 * *toString()* — returns *toBuffer()* in hexadecimal format
 * *toKIF()* — returns the private key in KIF format.
 * *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
-* *getKeyType()* — returns the key system type (currently only `ed25519`)
+* *getType()* — returns the key type (currently only `ed25519`)
 * *getAddress()* — returns an Address object (see next section)
 
 ---

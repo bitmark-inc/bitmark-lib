@@ -22,20 +22,22 @@ var common = require('../lib/util/common.js');
  */
 
 describe('Address', function(){
-  it('can\'t build without data', function(){
-    expect(function(){
-      return new Address();
-    }).to.throw(Error);
-  });
-  it('should throw error on bad network param', function(){
-    expect(function(){
-      return new Address(common.generateRandomBytes(32), 'main_net');
-    }).to.throw(Error);
-  });
-  it('should throw an error on bad type param', function() {
-    expect(function() {
-      return new Address(common.generateRandomBytes(32), 'livenet', 'badtype');
-    }).to.throw(Error);
+  describe('Constructor', function(){
+    it('can\'t build without data', function(){
+      expect(function(){
+        return new Address();
+      }).to.throw(Error);
+    });
+    it('should throw error on bad network param', function(){
+      expect(function(){
+        return new Address(common.generateRandomBytes(32), 'main_net');
+      }).to.throw(Error);
+    });
+    it('should throw an error on bad type param', function() {
+      expect(function() {
+        return new Address(common.generateRandomBytes(32), 'livenet', 'badtype');
+      }).to.throw(Error);
+    });
   });
 
   var validData = [{
