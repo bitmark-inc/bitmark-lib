@@ -1,5 +1,8 @@
 # bitmark-lib
 
+[![Build Status](https://travis-ci.org/bitmark-inc/bitmark-lib.svg?branch=master)](https://travis-ci.org/bitmark-inc/bitmark-lib)
+[![Coverage Status](https://coveralls.io/repos/bitmark-inc/bitmark-lib/badge.svg?branch=master)](https://coveralls.io/r/bitmark-inc/bitmark-lib?branch=master)
+
 The pure Javascript Bitmark library for node.js and browsers.
 
 # Install
