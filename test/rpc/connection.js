@@ -191,6 +191,19 @@ describe('RPC-Connection', function(){
     });
   });
 
+  it('should allow to end the connection', function(done) {
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 8000});
+    var successEventEmitted = false;
+    var self = this;
+    conn.once('success', function(){
+      conn.end();
+      setTimeout(function(){
+        expect(conn.status).to.equal('ended');
+        done();
+      }, 200);
+    });
+  });
+
 });
 
 
