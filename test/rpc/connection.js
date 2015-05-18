@@ -75,7 +75,7 @@ var createServer = function(port){
 
 describe('RPC-Connection', function(){
   this.timeout(15000);
-  it('should alway return RPC Connection instance', function(){
+  it('should return RPC Connection instance when initiating without `new` keyword', function(){
     var conn = RPCConnection({ip: '127.0.0.2', port: 8000});
     expect(conn).to.be.instanceof(RPCConnection);
   });

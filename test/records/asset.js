@@ -89,5 +89,23 @@ describe('Asset', function(){
                   .sign(data.pk);
     expect(asset.getSignature().toString('hex')).to.equal(data.signature);
   });
+  it('getters should return correct result', function(){
+    var asset = new Asset();
+    expect(asset.isSigned()).to.not.be.ok;
+    asset.setName(data.name)
+      .setDescription(data.description)
+      .setFingerprint(data.fingerprint)
+      .sign(data.pk);
+    expect(asset.isSigned()).to.be.ok;
+    expect(asset.getName()).to.equal(data.name);
+    expect(asset.getDescription()).to.equal(data.description);
+    expect(asset.getFingerprint()).to.equal(data.fingerprint);
+    expect(asset.getRegistrant().toString()).to.equal(data.pk.getAddress().toString());
+    expect(asset.getSignature().toString('hex')).to.equal(data.signature);
+  });
+  it('should return Asset instance when initiating without `new` keyword', function(){
+    var asset = Asset();
+    expect(asset).to.be.instanceof(Asset);
+  });
 
 });

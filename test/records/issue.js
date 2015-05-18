@@ -97,4 +97,8 @@ describe('Issue', function(){
     expect(issue.getSignature().toString('hex')).to.equal(issueSignature);
     expect(issue.getAsset()).to.equal(assetWithId.getId());
   });
+  it('should return Issue instance when initiating without `new` keyword', function(){
+    var issue = Issue().fromAsset(assetWithId).setNonce(1).sign(issuePk);
+    expect(issue).to.be.instanceof(Issue);
+  });
 });

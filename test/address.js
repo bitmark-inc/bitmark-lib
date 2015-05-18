@@ -47,7 +47,7 @@ describe('Address', function(){
     type: 'ed25519'
   },{
     address: 'erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb',
-    pubkey: new Buffer('7a33f91e54c259cfaa1a12753c17fa104ebc5033840712d80e263bf9600eb88e', 'hex'),
+    pubkey: '7a33f91e54c259cfaa1a12753c17fa104ebc5033840712d80e263bf9600eb88e',
     network: 'testnet',
     type: 'ed25519'
   }];
@@ -74,11 +74,19 @@ describe('Address', function(){
     });
     it('should be able to create address for test net', function(){
       expect(function(){
-        return new Address(new Buffer(validData[1].pubkey, 'hex'));
+        return new Address(new Buffer(validData[1].pubkey, 'hex'), validData[1].network);
       }).to.not.throw();
 
-      var address = new Address(new Buffer(validData[1].pubkey, 'hex'));
-      expect(address.toString() === validData[1].address);
+      var address = new Address(new Buffer(validData[1].pubkey, 'hex'), validData[1].network);
+      expect(address.toString()).to.equal(validData[1].address);
+    });
+    it('should be able to receive the hex string as pubkey', function(){
+      var address = Address.fromPublicKey(validData[1].pubkey, validData[1].network);
+      expect(address.toString()).to.equal(validData[1].address);
+    });
+    it('should return Address instance when initiating without `new` keyword', function(){
+      var address = Address(new Buffer(validData[1].pubkey, 'hex'));
+      expect(address).to.be.instanceof(Address);
     });
   });
 

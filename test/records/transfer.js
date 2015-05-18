@@ -92,4 +92,9 @@ describe('Transfer', function(){
     expect(transfer.getOwner().toString()).to.equal(transferPk.getAddress().toString());
     expect(transfer.getPreTx()).to.equal(issueWithId.getTxId());
   });
+
+  it('should return Transfer instance when initiating without `new` keyword', function(){
+    var transfer = Transfer().from(issueWithId).to(transferPk.getAddress()).sign(issuePk);
+    expect(transfer).to.be.instanceof(Transfer);
+  });
 });

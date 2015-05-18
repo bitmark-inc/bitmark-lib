@@ -50,6 +50,10 @@ describe('Private Key', function(){
         return new PrivateKey('testnet', 'myalgorithm');
       }).to.throw(Error);
     });
+    it('still return instance of PrivateKey when initiating without `new` keyword', function(){
+      var privateKey = PrivateKey();
+      expect(privateKey).to.be.instanceof(PrivateKey);
+    });
   });
   var validData = {
     livenet: {
