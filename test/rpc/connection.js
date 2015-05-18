@@ -98,6 +98,9 @@ describe('RPC-Connection', function(){
     var conn = new RPCConnection({ip: '127.0.0.2', port: 8000});
     var failEventEmitted = false;
     expect(conn.status).to.equal('connecting');
+    conn.once('success', function(){
+      console.log('still success');
+    });
     conn.once('fail', function(){
       failEventEmited = true;
       expect(conn.status).to.equal('fail');
