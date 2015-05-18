@@ -95,12 +95,9 @@ describe('RPC-Connection', function(){
     }).to.throw(Error);
   });
   it('should emit fail and ended event on long handshake period', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.2', port: 8000});
+    var conn = new RPCConnection({ip: '192.0.2.0', port: 8000});
     var failEventEmitted = false;
     expect(conn.status).to.equal('connecting');
-    conn.once('success', function(){
-      console.log('still success');
-    });
     conn.once('fail', function(){
       failEventEmited = true;
       expect(conn.status).to.equal('fail');
