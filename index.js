@@ -5,7 +5,7 @@ module.exports = exports = {
   Issue: require('./lib/records/issue.js'),
   Transfer: require('./lib/records/transfer.js'),
 
-  rpc: require('./lib/rpc/rpc.js'),
+  RPCPool: require('./lib/rpc/pool.js'),
   config: require('./lib/config.js'),
   networks: require('./lib/networks.js'),
 
