@@ -120,7 +120,7 @@ describe('RPC-Connection', function(){
       setTimeout(function(){
         expect(conn.status).to.equal('ended');
         done();
-      }, 2100);
+      }, 2200);
     });
   });
 
