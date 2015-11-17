@@ -1,6 +1,12 @@
 language: node_js
 node_js:
 - '4.1.2'
+before_install:
+  - sudo apt-get install python-software-properties # install add-apt-repository
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test # to add the PPA to system
+  - sudo apt-get update
+  - sudo apt-get install gcc-4.8 -y # install gcc 4.8 - 64 bits
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50 # replace gcc version
 install:
   - npm install
 after_script:
