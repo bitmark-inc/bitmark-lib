@@ -42,6 +42,6 @@
     "crypto-js": "^3.1.2",
     "lodash": "^3.6.0",
     "node-uuid": "^1.4.3",
-    "tweetnacl-nodewrap": "^0.1.3"
+    "tweetnacl-nodewrap": "^0.1.7"
   }
 }
