@@ -54,15 +54,15 @@ function createRPCServer(port) {
         stream.write(JSON.stringify(result) + String.fromCharCode(10));
       } else if (method === 'Asset.Register') {
         result = {id: data.id, ok: true, result: {
-          txid: 'Qk1LMOCj4idjqLu4rrKpf0p/33itNG1Np7dHx4+yDKNz1mxA',
-          asset: 'Qk1BMDvM9A1um1lsiknf3kPUWPu4TdfD/+TBNhpLx22f8+RKEBG7gztnGVKQEyF3B1cCOkcK/H8wm+JyrriA6ZPkGDg=',
+          txid: '424d4b30e0a3e22763a8bbb8aeb2a97f4a7fdf78ad346d4da7b747c78fb20ca373d66c40',
+          asset: '424d41303bccf40d6e9b596c8a49dfde43d458fbb84dd7c3ffe4c1361a4bc76d9ff3e44a1011bb833b671952901321770757023a470afc7f309be272aeb880e993e41838',
           paymentAddress: null,
           duplicate: false
         }};
         stream.write(JSON.stringify(result) + String.fromCharCode(10));
       } else if (method === 'Bitmark.Issue') {
         result = {id: data.id, ok: true, result: {
-          txid: 'Qk1LMOSme750DT7KBKWXF0d8iTdlBhA8f97K1ANc5mjTPE9R',
+          txid: '424d4b30e4a67bbe740d3eca04a59717477c89376506103c7fdecad4035ce668d33c4f51',
           paymentAddress: [{"currency":"bitcoin","address":"mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8"}],
           duplicate: false
         }};
@@ -70,12 +70,12 @@ function createRPCServer(port) {
       } else if (method === 'Bitmarks.Issue') {
         result = {id: data.id, ok: true, result: [
           {
-            "txid":"Qk1LMG2BbDORR/3qaBMEOaWn4PF0WzsCRCVadynBEc8zM5aV",
+            "txid":"424d4b306d816c339147fdea68130439a5a7e0f1745b3b0244255a7729c111cf33339695",
             "paymentAddress":[{"currency":"bitcoin", "address":"mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8"}],
             "duplicate":false
           },
           {
-            "txid":"Qk1LMBI5ozZ/ziv3IXWzf4EyLWhk62pQFgyL+fxqmrpmQJXw",
+            "txid":"424d4b301239a3367fce2bf72175b37f81322d6864eb6a50160c8bf9fc6a9aba664095f0",
             "paymentAddress":[{"currency":"bitcoin", "address":"mghzcd8mVYnYQ4A4BQqjL8NoSq7pmkYjZK"}],
             "duplicate":false
           }
@@ -85,15 +85,15 @@ function createRPCServer(port) {
         result = {id: data.id, ok: true, result: {}};
         stream.write(JSON.stringify(result) + String.fromCharCode(10));
       } else if (method === 'Assets.Get') {
-        result = {"assets":[{"txid":"Qk1LMOCj4idjqLu4rrKpf0p/33itNG1Np7dHx4+yDKNz1mxA","asset":"Qk1BMDvM9A1um1lsiknf3kPUWPu4TdfD/+TBNhpLx22f8+RKEBG7gztnGVKQEyF3B1cCOkcK/H8wm+JyrriA6ZPkGDg=","exists":true,"state":"Mined","type":"AssetData","transaction":{"description":"this is test-01","name":"test-01","fingerprint":"Fingerprint for test-01","registrant":"e8d6dguCHxWRqUkn9E6iRRRKUDtyoVqyXLuFmgXKFgYfN7yu71","signature":"8OhJ7hwYYBOyccpg97HTohgArOTDWb0CUf20kEz4DuM5mkqhFnKYDvANjtDMyxW6lujA/6y/1W7lcN7GetEfAw=="}}]};
+        result = {"assets":[{"txid":"424d4b30e0a3e22763a8bbb8aeb2a97f4a7fdf78ad346d4da7b747c78fb20ca373d66c40","asset":"424d41303bccf40d6e9b596c8a49dfde43d458fbb84dd7c3ffe4c1361a4bc76d9ff3e44a1011bb833b671952901321770757023a470afc7f309be272aeb880e993e41838","exists":true,"state":"Mined","type":"AssetData","transaction":{"description":"this is test-01","name":"test-01","fingerprint":"Fingerprint for test-01","registrant":"e8d6dguCHxWRqUkn9E6iRRRKUDtyoVqyXLuFmgXKFgYfN7yu71","signature":"8OhJ7hwYYBOyccpg97HTohgArOTDWb0CUf20kEz4DuM5mkqhFnKYDvANjtDMyxW6lujA/6y/1W7lcN7GetEfAw=="}}]};
         result = {id: data.id, ok: true, result: result};
         stream.write(JSON.stringify(result) + String.fromCharCode(10));
       } else if (method === 'Transaction.Get') {
-        result = {"transactions":[{"txid":"Qk1LMG2BbDORR/3qaBMEOaWn4PF0WzsCRCVadynBEc8zM5aV","asset":null,"exists":true,"state":"Mined","type":"BitmarkIssue","transaction":{"asset":"Qk1BMDvM9A1um1lsiknf3kPUWPu4TdfD/+TBNhpLx22f8+RKEBG7gztnGVKQEyF3B1cCOkcK/H8wm+JyrriA6ZPkGDg=","owner":"e8d6dguCHxWRqUkn9E6iRRRKUDtyoVqyXLuFmgXKFgYfN7yu71","nonce":2,"signature":"MBKZdADSeV8lA0XhtC9ykITxlRw4xO0ywcxhV11XCiC8UjD3R4PBOx1fD0bLvX3J6Jdbt4OgdxVxjfjRHvUEBA=="}}]};
+        result = {"transactions":[{"txid":"424d4b306d816c339147fdea68130439a5a7e0f1745b3b0244255a7729c111cf33339695","asset":null,"exists":true,"state":"Mined","type":"BitmarkIssue","transaction":{"asset":"424d41303bccf40d6e9b596c8a49dfde43d458fbb84dd7c3ffe4c1361a4bc76d9ff3e44a1011bb833b671952901321770757023a470afc7f309be272aeb880e993e41838","owner":"e8d6dguCHxWRqUkn9E6iRRRKUDtyoVqyXLuFmgXKFgYfN7yu71","nonce":2,"signature":"MBKZdADSeV8lA0XhtC9ykITxlRw4xO0ywcxhV11XCiC8UjD3R4PBOx1fD0bLvX3J6Jdbt4OgdxVxjfjRHvUEBA=="}}]};
         result = {id: data.id, ok: true, result: result};
         stream.write(JSON.stringify(result) + String.fromCharCode(10));
       } else if (method === 'Bitmark.Transfer') {
-        result = {"txid":"Qk1LMK60+Vt2NVK/gub49hZJvP96ctzRQFajg5rVhcaCgC7c","paymentAddress":[{"currency":"bitcoin","address":"mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8"}],"duplicate":true},{"txid":"Qk1LMK60+Vt2NVK/gub49hZJvP96ctzRQFajg5rVhcaCgC7c","paymentAddress":[{"currency":"bitcoin","address":"mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8"}],"duplicate":true};
+        result = {"txid":"424d4b30aeb4f95b763552bf82e6f8f61649bcff7a72dcd14056a3839ad585c682802edc","paymentAddress":[{"currency":"bitcoin","address":"mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8"}],"duplicate":true},{"txid":"424d4b30aeb4f95b763552bf82e6f8f61649bcff7a72dcd14056a3839ad585c682802edc","paymentAddress":[{"currency":"bitcoin","address":"mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8"}],"duplicate":true};
         result = {id: data.id, ok: true, result: result};
         stream.write(JSON.stringify(result) + String.fromCharCode(10));
       }
@@ -217,8 +217,8 @@ describe('RPC Pool', function(){
     var pool = new Pool(null, fullNetwork).start();
     pool.on('database-changed', function(){
       pool.registerAsset(asset, function(error, result){
-        expect(asset.getId()).to.equal('Qk1BMDvM9A1um1lsiknf3kPUWPu4TdfD/+TBNhpLx22f8+RKEBG7gztnGVKQEyF3B1cCOkcK/H8wm+JyrriA6ZPkGDg=');
-        expect(asset.getTxId()).to.equal('Qk1LMOCj4idjqLu4rrKpf0p/33itNG1Np7dHx4+yDKNz1mxA');
+        expect(asset.getId()).to.equal('424d41303bccf40d6e9b596c8a49dfde43d458fbb84dd7c3ffe4c1361a4bc76d9ff3e44a1011bb833b671952901321770757023a470afc7f309be272aeb880e993e41838');
+        expect(asset.getTxId()).to.equal('424d4b30e0a3e22763a8bbb8aeb2a97f4a7fdf78ad346d4da7b747c78fb20ca373d66c40');
         done();
       });
     });
@@ -229,7 +229,7 @@ describe('RPC Pool', function(){
     var issue01 = new Issue().fromAsset(asset).setNonce(1).sign(bitmarkKey);
     pool.on('database-changed', function(){
       pool.issueBitmark(issue01, function(error, result){
-        expect(issue01.getTxId()).to.equal('Qk1LMOSme750DT7KBKWXF0d8iTdlBhA8f97K1ANc5mjTPE9R');
+        expect(issue01.getTxId()).to.equal('424d4b30e4a67bbe740d3eca04a59717477c89376506103c7fdecad4035ce668d33c4f51');
         expect(issue01.getPaymentAddress()).to.equal('mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8');
         done();
       });
@@ -242,9 +242,9 @@ describe('RPC Pool', function(){
     var issue03 = new Issue().fromAsset(asset).setNonce(3).sign(bitmarkKey);
     pool.on('database-changed', function(){
       pool.issueBitmarks([issue02, issue03], function(error, result){
-        expect(issue02.getTxId()).to.equal('Qk1LMG2BbDORR/3qaBMEOaWn4PF0WzsCRCVadynBEc8zM5aV');
+        expect(issue02.getTxId()).to.equal('424d4b306d816c339147fdea68130439a5a7e0f1745b3b0244255a7729c111cf33339695');
         expect(issue02.getPaymentAddress()).to.equal('mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8');
-        expect(issue03.getTxId()).to.equal('Qk1LMBI5ozZ/ziv3IXWzf4EyLWhk62pQFgyL+fxqmrpmQJXw');
+        expect(issue03.getTxId()).to.equal('424d4b301239a3367fce2bf72175b37f81322d6864eb6a50160c8bf9fc6a9aba664095f0');
         expect(issue03.getPaymentAddress()).to.equal('mghzcd8mVYnYQ4A4BQqjL8NoSq7pmkYjZK');
         done();
       });
@@ -265,11 +265,11 @@ describe('RPC Pool', function(){
   it('should support transfering bitmarks', function(done) {
     var pool = new Pool(null, fullNetwork).start();
     var issue = new Issue().fromAsset(asset).setNonce(2).sign(bitmarkKey);
-    issue._txId = 'Qk1LMG2BbDORR/3qaBMEOaWn4PF0WzsCRCVadynBEc8zM5aV';
+    issue._txId = '424d4b306d816c339147fdea68130439a5a7e0f1745b3b0244255a7729c111cf33339695';
     var bitmark = new Transfer().from(issue).to('f8hydzQaEuEuKgANWvzzRAvkPCGyVD2784LPL2SLu9YjohjvhC').sign(bitmarkKey);
     pool.on('database-changed', function(){
       pool.transferBitmark(bitmark, function(error, result) {
-        expect(bitmark.getTxId()).to.equal('Qk1LMK60+Vt2NVK/gub49hZJvP96ctzRQFajg5rVhcaCgC7c');
+        expect(bitmark.getTxId()).to.equal('424d4b30aeb4f95b763552bf82e6f8f61649bcff7a72dcd14056a3839ad585c682802edc');
         expect(bitmark.getPaymentAddress()).to.equal('mrLShymH2jnQ3kPCxDRz3iqvASA6FEoiJ8');
         done();
       });
@@ -289,7 +289,7 @@ describe('RPC Pool', function(){
   it('should support getting asset by fingerprint', function(done) {
     var pool = new Pool(null, fullNetwork).start();
     pool.on('database-changed', function(){
-      pool.readTransaction(['Qk1LMG2BbDORR/3qaBMEOaWn4PF0WzsCRCVadynBEc8zM5aV'], function(error, data) {
+      pool.readTransaction(['424d4b306d816c339147fdea68130439a5a7e0f1745b3b0244255a7729c111cf33339695'], function(error, data) {
         expect(error).to.not.be.ok;
         done();
       });

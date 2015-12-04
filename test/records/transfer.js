@@ -33,13 +33,13 @@ describe('Transfer', function(){
                 .setDescription('this is description')
                 .setFingerprint('5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c')
                 .sign(assetPk);
-    asset._id = 'Qk1BMA6j4S+GR/wiSYZaNiNoP5nzDPOVUp9xh7hqPJIgAhG5JHCurWesGW3zsZOY1CRBoNowiD+HOmFEapUk5TcTQc4=';
-    asset._txid = 'Qk1LMIidXQTVkrhVdJW6XDS7pS51QCt/i5kaktJVFRakAfLw';
+    asset._id = '424d41300ea3e12f8647fc2249865a3623683f99f30cf395529f7187b86a3c92200211b92470aead67ac196df3b19398d42441a0da30883f873a61446a9524e5371341ce';
+    asset._txid = '424d4b30889d5d04d592b8557495ba5c34bba52e75402b7f8b991a92d2551516a401f2f0';
 
     issuePk = PrivateKey.fromKIF('c7SBAFCPSdwwAmQ11XFYe33thejPbKFMMTv5zaTREt8oPNNVMu');
     issueWithoutId = new Issue().fromAsset(asset).setNonce(0).sign(issuePk);
     issueWithId = new Issue().fromAsset(asset).setNonce(0).sign(issuePk);
-    issueWithId._txId = 'Qk1LMDU0wALSnnZAqDonqDxigp61e/f/3pwW4celYkqIXlGo';
+    issueWithId._txId = '424d4b303534c002d29e7640a83a27a83c62829eb57bf7ffde9c16e1c7a5624a885e51a8';
 
     transferPk = PrivateKey.fromKIF('dknrVT2Ybrf4AJBpVzBxQuXQ5LG1maQEskkhmmSVCwiQeRGewM');
   });

@@ -37,8 +37,8 @@ describe('Issue', function(){
                 .setDescription('this is description')
                 .setFingerprint('5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c')
                 .sign(assetPk);
-    assetWithId._id = 'Qk1BMA6j4S+GR/wiSYZaNiNoP5nzDPOVUp9xh7hqPJIgAhG5JHCurWesGW3zsZOY1CRBoNowiD+HOmFEapUk5TcTQc4=';
-    assetWithId._txid = 'Qk1LMIidXQTVkrhVdJW6XDS7pS51QCt/i5kaktJVFRakAfLw';
+    assetWithId._id = '424d41300ea3e12f8647fc2249865a3623683f99f30cf395529f7187b86a3c92200211b92470aead67ac196df3b19398d42441a0da30883f873a61446a9524e5371341ce';
+    assetWithId._txid = '424d4b30889d5d04d592b8557495ba5c34bba52e75402b7f8b991a92d2551516a401f2f0';
 
     issuePk = PrivateKey.fromKIF('c7SBAFCPSdwwAmQ11XFYe33thejPbKFMMTv5zaTREt8oPNNVMu');
     issueSignature = '92d67d53389d37d014e9eebbbdd9c15a295acd1009a7823183dd420142f837bab0be29dd49a3c63fee053c5bb5fba5b68fc75604a39ec3653f96859b6710e001';
