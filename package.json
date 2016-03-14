@@ -28,20 +28,20 @@
     "url": "https://github.com/bitmark-inc/bitmark-lib/issues"
   },
   "homepage": "https://github.com/bitmark-inc/bitmark-lib",
-  "devDependencies": {
-    "chai": "^2.1.2",
-    "coveralls": "^2.11.2",
-    "istanbul": "^0.3.13",
-    "mocha": "^2.2.1",
-    "q": "^1.2.0"
-  },
   "dependencies": {
-    "async": "^0.9.0",
-    "bigi": "^1.4.0",
-    "bs58": "^2.0.1",
-    "crypto-js": "^3.1.2",
-    "lodash": "^3.6.0",
-    "node-uuid": "^1.4.3",
+    "async": "^1.5.2",
+    "bigi": "^1.4.1",
+    "bs58": "^3.0.0",
+    "crypto-js": "^3.1.6",
+    "lodash": "^4.6.1",
+    "node-uuid": "^1.4.7",
     "tweetnacl-nodewrap": "^0.1.7"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.8",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "q": "^1.4.1"
   }
 }
