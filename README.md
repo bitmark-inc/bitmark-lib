@@ -132,7 +132,7 @@ var Asset = bitmarkLib.Asset
 
 #### Instantiate
 
-To instatiate an Asset record object:
+To instantiate an Asset record object:
 
 ```javascript
 var asset = new Asset()
