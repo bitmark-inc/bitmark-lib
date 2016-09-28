@@ -75,11 +75,11 @@ describe('Asset', function(){
     }).to.not.throw(Error);
   });
   var data = {
-    pk: PrivateKey.fromKIF('dDRKt8J6MfA4em7zwy2wxmogf3FhSRGmescE6fELzxh48JJrwR'),
+    pk: PrivateKey.fromKIF('Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr'),
     name: 'this is name',
     description: 'this is description',
     fingerprint: '5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c',
-    signature: 'e2ed1d6747cb6447477fa917135df50212f28743e1039e05ff03107f5608b5785a22e7a05c5f5b92b72748bbfe40ab282cb782638d18bc237e90570390dd0b04'
+    signature: 'b90e2c714ec0a0da5470c4269da53278eca3ff02219d29c12d144d9c3e2989247325bf7ca9d22253019354b976277f81e96410bcbabb1428264223966fbfa200'
   };
   it('should be able to generate the right signature for the record', function(){
     var asset = new Asset()

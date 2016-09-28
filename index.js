@@ -1,3 +1,4 @@
+global.__baseBitmarkLibModulePath = __dirname + '/';
 module.exports = exports = {
   Address: require('./lib/address.js'),
   PrivateKey: require('./lib/private-key.js'),

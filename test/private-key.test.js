@@ -57,25 +57,25 @@ describe('Private Key', function(){
   });
   var validData = {
     livenet: {
-      kif: 'ZfaawUwgdW4oxP4zH79Dp65a8SowgDwDU4S7rq6iGusWZZ1Jmn',
+      kif: 'Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr',
       network: 'livenet',
       type: 'ed25519',
-      address: 'bZrKcCGTNjXJSuTEaHroU1BrCDc7F2oc1aiCfrEDejnHPBJtA9',
-      priKey: 'cddf9e89e5c59232c59cbb40d01082dca5f48c9b213b29418a61bc82d4376f59c8420c382e2be938ec9af32ef2ab370b9787b7e7ccea7f64357006253f07f7f6'
+      address: 'a5fyw6MQT6C6fpCBeSVdCfT3WS8WTTM24meT3nVuHyxJF7yKes',
+      priKey: 'd7007fdf823a8d2d769f5778e6fb2d2c0cca9a104a7d2a7171d0a2eea1f55b7304946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a'
     },
     testnet: {
-      kif: 'c7EALHA9eVEfFQy9DcW61uRvPAjESakGqpb2vDeoKvRLsugZzC',
+      kif: 'dd67Uj2rsMC6cEqGoXt6UdigFcMYG9iT64y5pEodDWk8HKUXeM',
       network: 'testnet',
       type: 'ed25519',
-      address: 'fqZJeprCzUrTjVntT3r8JX6tSEmxtN1y4wivu1o8Qkn7icvoEU',
-      priKey: '0f8096d9ea3390494af382bf42991927baca9e88ac5ad9f4b44f3483895aaba4fab4c74aaed5cb9efb35714efb0ff576ae97cac1d5727ce14a73c574b496ac29'
+      address: 'dyALPzR7JSeNJybzogVXqrzsjfZos96bLurwMAHtbzjHSzk4yh',
+      priKey: 'd7007fdf823a8d2d769f5778e6fb2d2c0cca9a104a7d2a7171d0a2eea1f55b7304946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a'
     }
   };
   var invalidKIF = {
-    wrongKeyIndicator: 'eJT6wuVa6S28o7HwZHyU5KF2phBJwA2sQm3ay29qGX6grPTJWD',
-    unknowKeyType: '5fqsbGCS8d1oztEsbkDxt5sEHn5oaJ7EgtRwy744BQb8LwSUT3',
-    wrongChecksum: 'cnuhWA1XJXgTYuH8udThP81RdgvUJ7tECow6Z3K8Kss8Tj7BWQ',
-    wrongKeyLength: '3j8Cyvox4R7HKtCS8KfWFtsLWS4zz2rdmEvLv3dApcgNCnAo3XXz'
+    wrongKeyIndicator: 'bgLwFH11Sfxxnf8NDut9A2wm8zdtZJqfSzrqfYudZWMddYghqX',
+    unknowKeyType: '26qWaj1UnppMz6NhxvDsSy2ZVrEQe7wyU34UVusMYPcB2wzhvMt',
+    wrongChecksum: 'Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xs',
+    wrongKeyLength: '83kQWEJPfyxC7UayrKtFq2fnaUaYuwmzmRUm4FQCqk52DiBab'
   };
   describe('Parse from KIF string', function(){
     it('should be able to parse the livenet KIF correctly', function(){

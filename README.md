@@ -143,7 +143,7 @@ var asset = new Asset()
 ```
 
 #### Methods
-* *getRPCMessage()* — returns a json object for sending in an RPC message
+* *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the asset record is signed
 * *getName()* — returns the string value for an Asset's *Name* property
 * *getDescription()* — returns the string value for an Asset's *Description* property
@@ -176,7 +176,7 @@ var issue = new Issue()
 Note: `fromAsset()` can receive either an Asset object or an *asset-id* string.
 
 #### Methods
-* *getRPCMessage()* — returns a json object for sending in an RPC message
+* *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the issue record is signed
 * *getOwner()* — returnss an Address object specifying the Issue record's *Owner* property
 * *getSignature()* — returns the Issue object's signature buffer
@@ -210,7 +210,7 @@ var transfer = new Transfer()
 Note: `from()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object. 
 
 #### Methods
-* *getRPCMessage()* — returns a json object for sending in an RPC message
+* *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the transfer record is signed
 * *getOwner()* —  returnss an Address object specifying the the Transfer record's *Owner* property
 * *getSignature()*: returns the Transfer object's signature buffer

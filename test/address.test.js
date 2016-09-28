@@ -41,21 +41,23 @@ describe('Address', function(){
   });
 
   var validData = [{
-    address: 'ayUWeSeJEcATAHQTBU1qkVcEh9V12cnfCeFWAh1Jq7NdVMjH5q',
-    pubkey: '7a33f91e54c259cfaa1a12753c17fa104ebc5033840712d80e263bf9600eb88e',
+    // kif: Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr
+    address: 'a5fyw6MQT6C6fpCBeSVdCfT3WS8WTTM24meT3nVuHyxJF7yKes',
+    pubkey: '04946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a',
     network: 'livenet',
     type: 'ed25519'
   },{
-    address: 'erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb',
-    pubkey: '7a33f91e54c259cfaa1a12753c17fa104ebc5033840712d80e263bf9600eb88e',
+    // kif: dd67Uj2rsMC6cEqGoXt6UdigFcMYG9iT64y5pEodDWk8HKUXeM
+    address: 'dyALPzR7JSeNJybzogVXqrzsjfZos96bLurwMAHtbzjHSzk4yh',
+    pubkey: '04946802fadd6d7723985ee012f2b02846fc9e5f6d8084f3c3af5407911a9b4a',
     network: 'testnet',
     type: 'ed25519'
   }];
 
   var invalidAddress = [
-    'erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;', // bad base58 string
-    'cvDgstg9fHPays7Mm61o56P9omCejTfSqiMkKNuJV7m8AqXfmv', // wrong key part bit
-    '7m43QACNH8zZg9Xm4n2VG6mR6XRuApXeFek654TPf1wim3weJd', // unrecognize key type
+    'a5fyw6MQT6C6fpCBeSVdCfT3WS8WTTM24meT3nVuHyxJF7yKe;', // bad base58 string
+    'c2RAAYPFsmREVPu6E4VaXGDxd3rAAJDohqkhCUPtwzLnnj2fsT', // wrong key part bit
+    '2B55A7Avk7GGXSGtW5cUnyTPXZX4D8d7Ba3aqkAdo66wBSkQ9ry', // unrecognize key type
   ];
 
   describe('Create Address from public key', function(){
