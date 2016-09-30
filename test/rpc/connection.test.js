@@ -1,10 +1,11 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
+var lib = require('../../index.js');
 
-var libDir = '../../lib/';
-var RPCConnection = require(libDir + 'rpc/connection.js');
-var config = require(libDir + 'config.js');
-var common = require(libDir + 'util/common.js');
+var RPCConnection = require(__baseBitmarkLibModulePath + 'lib/rpc/connection.js');
+var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
+var errorList = require(__baseBitmarkLibModulePath + 'lib/error');
 
 var tls = require('tls');
 var fs = require('fs');
@@ -97,8 +98,9 @@ describe('RPC-Connection', function(){
   it('should emit failed event on long handshake period', function(done){
     var conn = new RPCConnection({ip: '192.0.2.0', port: 7000});
     expect(conn.status).to.equal('connecting');
-    conn.once('fail', function(){
-      expect(conn.status).to.equal('fail');
+    conn.once('failed', function(error){
+      expect(error.message).to.equal(errorList.rpc.TIMEOUT);
+      expect(conn.status).to.equal('failed');
       done();
     });
   });
@@ -108,7 +110,7 @@ describe('RPC-Connection', function(){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000, keepLivingTimeout: 2000});
     var successEventEmitted = false;
     expect(conn.status).to.equal('connecting');
-    conn.once('success', function(){
+    conn.once('connected', function(){
       successEventEmitted = true;
       expect(conn.status).to.equal('connected');
       setTimeout(function(){
@@ -118,25 +120,26 @@ describe('RPC-Connection', function(){
     });
   });
 
-  it('should be able to connect and end the connection correctly', function(done){
+  it('should emit "failed" event if the server ends the connection', function(done){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
     var successEventEmitted = false;
     expect(conn.status).to.equal('connecting');
-    conn.once('success', function(){
+    conn.once('connected', function(){
       successEventEmitted = true;
       expect(conn.status).to.equal('connected');
     });
     conn.stream.write('ended');
-    conn.once('ended', function(){
+    conn.once('failed', function(){
       expect(successEventEmitted).to.equal(true);
-      expect(conn.status).to.equal('ended');
+      expect(conn.status).to.equal('failed');
       done();
     });
   });
+
   it('should be able to tell if the method is successfully called', function(done){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
     var successEventEmitted = false;
-    conn.once('success', function(){
+    conn.once('connected', function(){
       conn.callMethod('singleMethodSuccess', [], function(error) {
         expect(error).to.not.be.ok;
         done();
@@ -146,7 +149,7 @@ describe('RPC-Connection', function(){
   it('should be able to tell if the method called is failed', function(done){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
     var successEventEmitted = false;
-    conn.once('success', function(){
+    conn.once('connected', function(){
       conn.callMethod('singleMethodFail', [], function(error) {
         expect(error).to.be.ok;
         done();
@@ -157,7 +160,7 @@ describe('RPC-Connection', function(){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
     var successEventEmitted = false;
     var self = this;
-    conn.once('success', function(){
+    conn.once('connected', function(){
       var method01 = false;
       conn.callMethod('mergeMethod01', [], function(error) {
         method01 = !error;
@@ -177,7 +180,7 @@ describe('RPC-Connection', function(){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
     var successEventEmitted = false;
     var self = this;
-    conn.once('success', function(){
+    conn.once('connected', function(){
       conn.callMethod('responseTimeout', [], function(error) {
         expect(error).to.be.ok;
         done();
@@ -189,7 +192,7 @@ describe('RPC-Connection', function(){
     var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
     var successEventEmitted = false;
     var self = this;
-    conn.once('success', function(){
+    conn.once('connected', function(){
       conn.end();
       setTimeout(function(){
         expect(conn.status).to.equal('ended');
