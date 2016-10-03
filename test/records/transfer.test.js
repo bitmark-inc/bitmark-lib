@@ -1,13 +1,14 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
-var libDir = '../../lib/';
-var config = require(libDir + 'config.js');
-var common = require(libDir + 'util/common.js');
+var lib = require('../../index.js');
 
-var PrivateKey = require(libDir + 'private-key.js');
-var Asset = require(libDir + 'records/asset.js');
-var Issue = require(libDir + 'records/issue.js');
-var Transfer = require(libDir + 'records/transfer.js');
+var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
+
+var PrivateKey = require(__baseBitmarkLibModulePath + 'lib/private-key.js');
+var Asset = require(__baseBitmarkLibModulePath + 'lib/records/asset.js');
+var Issue = require(__baseBitmarkLibModulePath + 'lib/records/issue.js');
+var Transfer = require(__baseBitmarkLibModulePath + 'lib/records/transfer.js');
 
 /**
  * ****  CREATING TRANSFER

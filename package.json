@@ -10,7 +10,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "_mocha test/records/asset.test.js",
+    "test": "_mocha ./test/rpc/pool-api-handling.test.js",
     "coverage": "./node_modules/istanbul/lib/cli.js cover _mocha test/**/*.js",
     "coveralls": "npm run-script coverage && ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },

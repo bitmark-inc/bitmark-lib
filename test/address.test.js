@@ -1,8 +1,10 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
-var Address = require('../lib/address.js');
-var config = require('../lib/config.js');
-var common = require('../lib/util/common.js');
+var lib = require('../index.js');
+
+var Address = require(__baseBitmarkLibModulePath + 'lib/address.js');
+var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
 
 /**
  * ****  CREATING ADDRESS

@@ -1,9 +1,11 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
-var config = require('../lib/config.js');
-var common = require('../lib/util/common.js');
+var lib = require('../index.js');
 
-var PrivateKey = require('../lib/private-key.js');
+var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
+
+var PrivateKey = require(__baseBitmarkLibModulePath + 'lib/private-key.js');
 
 /**
  * ****  CREATING PRIVATE KEY

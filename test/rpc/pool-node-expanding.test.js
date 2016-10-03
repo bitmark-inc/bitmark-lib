@@ -1,11 +1,12 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
+var lib = require('../../index.js');
 
-var libDir = '../../lib/';
-var config = require(libDir + 'config.js');
-var common = require(libDir + 'util/common.js');
-var networks = require(libDir + 'networks.js');
-var Pool = require(libDir + 'rpc/pool.js');
+var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
+var networks = require(__baseBitmarkLibModulePath + 'lib/networks.js');
+var Pool = require(__baseBitmarkLibModulePath + 'lib/rpc/pool.js');
+
 
 var tls = require('tls');
 var fs = require('fs');
@@ -92,7 +93,6 @@ createTestServers();
 createLibTestNetwork();
 
 describe('Pool Expanding', function(){
-  console.log('aaa');
   this.timeout(15000);
   it('should be able to reach more than 1 levels to get more nodes', function(done) {
     var pool = new Pool([{id: '127.0.0.1:7001', ip: '127.0.0.1', port: '7001'}], 'libtestnet');
