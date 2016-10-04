@@ -23,26 +23,26 @@ var Issue = require(__baseBitmarkLibModulePath + 'lib/records/issue.js');
 
 describe('Issue', function(){
   var assetPk, assetWithoutId, assetWithId;
-  var issuePk, issueSignature;
+  var issueNonce, issuePk, issueSignature;
 
   before(function(){
-    assetPk = PrivateKey.fromKIF('dDRKt8J6MfA4em7zwy2wxmogf3FhSRGmescE6fELzxh48JJrwR');
+    assetPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     assetWithoutId = new Asset()
-                .setName('this is name')
-                .setDescription('this is description')
-                .setFingerprint('5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c')
+                .setName('Test Bitmark Lib')
+                .setDescription('Asset description')
+                .setFingerprint('Test Bitmark Lib 11')
                 .sign(assetPk);
 
     assetWithId = new Asset()
                 .setName('this is name')
                 .setDescription('this is description')
-                .setFingerprint('5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c')
+                .setFingerprint('Test Bitmark Lib 11')
                 .sign(assetPk);
-    assetWithId._id = '424d41300ea3e12f8647fc2249865a3623683f99f30cf395529f7187b86a3c92200211b92470aead67ac196df3b19398d42441a0da30883f873a61446a9524e5371341ce';
-    assetWithId._txid = '424d4b30889d5d04d592b8557495ba5c34bba52e75402b7f8b991a92d2551516a401f2f0';
+    assetWithId._id = '3e6e66b398030966f087347d447ea0d35133099a247d0dd9bfec29ac2f853d20de6ac10a8e5348ab7bdf16f8633780365e7ea62a39b5ab8c490dedd8573b3dc1';
 
-    issuePk = PrivateKey.fromKIF('c7SBAFCPSdwwAmQ11XFYe33thejPbKFMMTv5zaTREt8oPNNVMu');
-    issueSignature = '92d67d53389d37d014e9eebbbdd9c15a295acd1009a7823183dd420142f837bab0be29dd49a3c63fee053c5bb5fba5b68fc75604a39ec3653f96859b6710e001';
+    issueNonce = 1475482198529;
+    issuePk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
+    issueSignature = 'ea32dbdd484159d5dffb37a7d62282e85f83e478594acbdbf2254a81c4efae9f9c869fee52c652d40700b57da09f5a677058a441937976cd0f65b2e32f61cb0a';
   });
 
   it('should throw error if it can not get the asset id', function(){
@@ -88,18 +88,18 @@ describe('Issue', function(){
     }).to.not.throw();
   });
   it('produce the right signature', function(){
-    var issue = new Issue().fromAsset(assetWithId).setNonce(1).sign(issuePk);
+    var issue = new Issue().fromAsset(assetWithId).setNonce(issueNonce).sign(issuePk);
     expect(issue.getSignature().toString('hex')).to.equal(issueSignature);
   });
   it('getters should return right result', function(){
-    var issue = new Issue().fromAsset(assetWithId).setNonce(1).sign(issuePk);
+    var issue = new Issue().fromAsset(assetWithId).setNonce(issueNonce).sign(issuePk);
     expect(issue.isSigned()).to.equal(true);
     expect(issue.getOwner().toString()).to.equal(issuePk.getAddress().toString());
     expect(issue.getSignature().toString('hex')).to.equal(issueSignature);
     expect(issue.getAsset()).to.equal(assetWithId.getId());
   });
   it('should return Issue instance when initiating without `new` keyword', function(){
-    var issue = Issue().fromAsset(assetWithId).setNonce(1).sign(issuePk);
+    var issue = Issue().fromAsset(assetWithId).setNonce(issueNonce).sign(issuePk);
     expect(issue).to.be.instanceof(Issue);
   });
 });

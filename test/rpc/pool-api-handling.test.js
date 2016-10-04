@@ -71,7 +71,7 @@ var rpcDataToReturn = {
   }
 };
 
-var createTestServer = function(port){
+var createAPIHandlingTestServer = function(port){
   var mergeResult = '';
   var server = tls.createServer(options, function(stream){
     stream.on('data', function(data){
@@ -126,7 +126,7 @@ var createTestServer = function(port){
       }
     });
   });
-  server.listen(port || 7000);
+  server.listen(port || 5000);
 };
 
 var changeConfig = function(enoughAliveNode, enoughNodeRecord) {
@@ -135,17 +135,17 @@ var changeConfig = function(enoughAliveNode, enoughNodeRecord) {
 };
 
 var createLibTestNetwork = function() {
-  networks.libtestnet = {
-    name: 'libtestnet',
+  networks.api_handling_testnet = {
+    name: 'api_handling_testnet',
     address_value: networks.testnet.address_value,
     kif_value: networks.testnet.kif_value,
     static_hostnames: [],
-    static_nodes: ['127.0.0.1:7000', '127.0.0.1:7001']
+    static_nodes: ['127.0.0.1:5000', '127.0.0.1:5001']
   };
 };
 
-createTestServer(7000);
-createTestServer(7001);
+createAPIHandlingTestServer(5000);
+createAPIHandlingTestServer(5001);
 createLibTestNetwork();
 changeConfig(1, 1);
 
@@ -171,7 +171,7 @@ var transferPayId, transferPayments;
 
 describe('Supporting API', function() {
   this.timeout(15000);
-  var pool = new Pool([], 'libtestnet');
+  var pool = new Pool([], 'api_handling_testnet');
   it('should support registering asset', function(done) {
     pool.registerAssets([asset1, asset2], function(error, data) {
       expect(asset1.getId()).to.equal(rpcDataToReturn.registerAssets.result.assets[0].index);

@@ -70,14 +70,14 @@ var createServer = function(port){
       }
     });
   });
-  server.listen(port || 7000);
+  server.listen(port || 6000);
 };
 
 
 describe('RPC-Connection', function(){
   this.timeout(15000);
   it('should return RPC Connection instance when initiating without `new` keyword', function(){
-    var conn = RPCConnection({ip: '127.0.0.2', port: 7000});
+    var conn = RPCConnection({ip: '127.0.0.2', port: 6000});
     expect(conn).to.be.instanceof(RPCConnection);
   });
   it('should throw error on no `options` passed in', function(){
@@ -96,7 +96,7 @@ describe('RPC-Connection', function(){
     }).to.throw(Error);
   });
   it('should emit failed event on long handshake period', function(done){
-    var conn = new RPCConnection({ip: '192.0.2.0', port: 7000});
+    var conn = new RPCConnection({ip: '192.0.2.0', port: 6000});
     expect(conn.status).to.equal('connecting');
     conn.once('failed', function(error){
       expect(error.message).to.equal(errorList.rpc.TIMEOUT);
@@ -107,7 +107,7 @@ describe('RPC-Connection', function(){
 
   createServer();
   it('should close the connection if no activities happen for a while', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000, keepLivingTimeout: 2000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000, keepLivingTimeout: 2000});
     var successEventEmitted = false;
     expect(conn.status).to.equal('connecting');
     conn.once('connected', function(){
@@ -121,7 +121,7 @@ describe('RPC-Connection', function(){
   });
 
   it('should emit "failed" event if the server ends the connection', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000});
     var successEventEmitted = false;
     expect(conn.status).to.equal('connecting');
     conn.once('connected', function(){
@@ -137,7 +137,7 @@ describe('RPC-Connection', function(){
   });
 
   it('should be able to tell if the method is successfully called', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000});
     var successEventEmitted = false;
     conn.once('connected', function(){
       conn.callMethod('singleMethodSuccess', [], function(error) {
@@ -147,7 +147,7 @@ describe('RPC-Connection', function(){
     });
   });
   it('should be able to tell if the method called is failed', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000});
     var successEventEmitted = false;
     conn.once('connected', function(){
       conn.callMethod('singleMethodFail', [], function(error) {
@@ -157,7 +157,7 @@ describe('RPC-Connection', function(){
     });
   });
   it('should be able to parse the data in chunks', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000});
     var successEventEmitted = false;
     var self = this;
     conn.once('connected', function(){
@@ -177,7 +177,7 @@ describe('RPC-Connection', function(){
   });
 
   it('should be able to set timeout on method calls', function(done){
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000});
     var successEventEmitted = false;
     var self = this;
     conn.once('connected', function(){
@@ -189,7 +189,7 @@ describe('RPC-Connection', function(){
   });
 
   it('should allow to end the connection', function(done) {
-    var conn = new RPCConnection({ip: '127.0.0.1', port: 7000});
+    var conn = new RPCConnection({ip: '127.0.0.1', port: 6000});
     var successEventEmitted = false;
     var self = this;
     conn.once('connected', function(){

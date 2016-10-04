@@ -14,7 +14,7 @@ var options = {
   cert: fs.readFileSync('./test/rpc/public-cert.pem')
 };
 
-var createTestServer = function(port){
+var createNodemanagingTestServer = function(port){
   var mergeResult = '';
   var server = tls.createServer(options, function(stream){
     stream.on('data', function(data){
@@ -34,7 +34,7 @@ var createTestServer = function(port){
       }
     });
   });
-  server.listen(port || 7000);
+  server.listen(port);
 };
 
 var changeConfig = function(enoughAliveNode, enoughNodeRecord) {
@@ -43,30 +43,32 @@ var changeConfig = function(enoughAliveNode, enoughNodeRecord) {
 };
 
 var createLibTestNetwork = function() {
-  networks.libtestnet = {
-    name: 'libtestnet',
+  networks.node_managing_testnet = {
+    name: 'node_managing_testnet',
     address_value: networks.testnet.address_value,
     kif_value: networks.testnet.kif_value,
     static_hostnames: [],
-    static_nodes: ['127.0.0.1:7000']
+    static_nodes: ['127.0.0.1:3000']
   };
 };
 
-createTestServer(7000);
+createNodemanagingTestServer(3000);
 createLibTestNetwork();
-changeConfig(1, 1);
 
 describe('Pool Node Keeping', function() {
   this.timeout(15000);
+  beforeEach(function() {
+    changeConfig(1, 1);
+  });
   it('Should remove the connection cache and set the right status for the record if the connection failed', function(done) {
-    var pool = new Pool([], 'libtestnet');
+    var pool = new Pool([], 'node_managing_testnet');
     pool.start(function() {
-      var node = pool.nodes[networks.libtestnet.static_nodes];
+      var node = pool.nodes[networks.node_managing_testnet.static_nodes];
       var record = pool.database[0];
       expect(node).to.be.ok;
       node.stream.write('end');
       setTimeout(function() {
-        expect(pool.nodes[networks.libtestnet.static_nodes]).to.be.not.ok;
+        expect(pool.nodes[networks.node_managing_testnet.static_nodes]).to.be.not.ok;
         expect(record.alive).to.be.false;
         expect(record.lastSeen).to.be.ok;
         done();
@@ -74,14 +76,14 @@ describe('Pool Node Keeping', function() {
     });
   });
   it('Should remove the connection cache and set the right status for the record if the connection ended', function(done) {
-    var pool = new Pool([], 'libtestnet');
-    pool.start(function() {
-      var node = pool.nodes[networks.libtestnet.static_nodes];
+    var pool = new Pool([], 'node_managing_testnet');
+    pool.start(function(error) {
+      var node = pool.nodes[networks.node_managing_testnet.static_nodes];
       var record = pool.database[0];
       expect(node).to.be.ok;
       node.end();
       setTimeout(function() {
-        expect(pool.nodes[networks.libtestnet.static_nodes]).to.be.not.ok;
+        expect(pool.nodes[networks.node_managing_testnet.static_nodes]).to.be.not.ok;
         expect(record.alive).to.be.true;
         expect(record.lastSeen).to.be.ok;
         done();

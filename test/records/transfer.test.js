@@ -28,21 +28,21 @@ describe('Transfer', function(){
   var transferPk, transfer;
 
   before(function(){
-    assetPk = PrivateKey.fromKIF('dDRKt8J6MfA4em7zwy2wxmogf3FhSRGmescE6fELzxh48JJrwR');
+    assetPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     asset = new Asset()
-                .setName('this is name')
-                .setDescription('this is description')
-                .setFingerprint('5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c')
+                .setName('Test Bitmark Lib')
+                .setDescription('Asset description')
+                .setFingerprint('Test Bitmark Lib 11')
                 .sign(assetPk);
-    asset._id = '424d41300ea3e12f8647fc2249865a3623683f99f30cf395529f7187b86a3c92200211b92470aead67ac196df3b19398d42441a0da30883f873a61446a9524e5371341ce';
-    asset._txid = '424d4b30889d5d04d592b8557495ba5c34bba52e75402b7f8b991a92d2551516a401f2f0';
+    asset._id = '3e6e66b398030966f087347d447ea0d35133099a247d0dd9bfec29ac2f853d20de6ac10a8e5348ab7bdf16f8633780365e7ea62a39b5ab8c490dedd8573b3dc1';
 
-    issuePk = PrivateKey.fromKIF('c7SBAFCPSdwwAmQ11XFYe33thejPbKFMMTv5zaTREt8oPNNVMu');
-    issueWithoutId = new Issue().fromAsset(asset).setNonce(0).sign(issuePk);
-    issueWithId = new Issue().fromAsset(asset).setNonce(0).sign(issuePk);
-    issueWithId._txId = '424d4b303534c002d29e7640a83a27a83c62829eb57bf7ffde9c16e1c7a5624a885e51a8';
+    issuePk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
+    issueWithoutId = new Issue().fromAsset(asset).setNonce(1475482198529).sign(issuePk);
+    issueWithId = new Issue().fromAsset(asset).setNonce(1475482198529).sign(issuePk);
+    issueWithId._txId = '933890e98221e04eee661b3d889fcc5c1ec512ee636d8991f030351f76af456e';
 
-    transferPk = PrivateKey.fromKIF('dknrVT2Ybrf4AJBpVzBxQuXQ5LG1maQEskkhmmSVCwiQeRGewM');
+    transferPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
+    wrongTransferPk = PrivateKey.fromKIF('ddZdMwNbSoAKV72w5EHAfhJMShN9JphvSgpdAhWu7JYmEAeiQm');
   });
 
   it('should throw error if it can not get the previous txid', function(){
@@ -80,7 +80,7 @@ describe('Transfer', function(){
   });
   it('should verify the previous owner and signing key if possible', function(){
     expect(function(){
-      return new Transfer().from(issueWithId).to(transferPk.getAddress()).sign(assetPk);
+      return new Transfer().from(issueWithId).to(transferPk.getAddress()).sign(wrongTransferPk);
     }).to.throw(Error);
     expect(function(){
       return new Transfer().from(issueWithId).to(transferPk.getAddress()).sign(issuePk);
