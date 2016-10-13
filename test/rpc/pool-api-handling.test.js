@@ -20,7 +20,7 @@ var options = {
 };
 
 var rpcDataToReturn = {
-  registerAssets: {
+  createBitmarks: {
     "result": {
       "assets": [{
         "index":"3e6e66b398030966f087347d447ea0d35133099a247d0dd9bfec29ac2f853d20de6ac10a8e5348ab7bdf16f8633780365e7ea62a39b5ab8c490dedd8573b3dc1",
@@ -28,12 +28,7 @@ var rpcDataToReturn = {
       },{
         "index":"63c19ce1a7529b92ef8ade13f8dccd9c45283a6bd44310bd06205a420649a98bb0e9a32d7eaeafe2b7a6fa127af1303f861c457e72a117c43e815fb51fbb171a",
         "duplicate":false
-      }]
-    },
-    "error": null
-  },
-  issueBitmarks: {
-    "result": {
+      }],
       "issues": [{
         "txId":"933890e98221e04eee661b3d889fcc5c1ec512ee636d8991f030351f76af456e"
       },{
@@ -43,7 +38,7 @@ var rpcDataToReturn = {
       "payNonce":"01ce0a31d8c5c74d",
       "difficulty":"00000086bca1af286bcb9d6deab9cb860c2d3c5a060bde79dbbdd0ebf215d05d"
     },
-    "error":null
+    "error": null
   },
   proofBitmark: {
     "result": {
@@ -90,15 +85,22 @@ var createAPIHandlingTestServer = function(port){
         return;
       }
 
-      if (method === 'Assets.Register') {
-        tmp = rpcDataToReturn.registerAssets;
-        tmp.id = data.id;
-        stream.write(JSON.stringify(tmp) + String.fromCharCode(10));
-        return;
-      }
+      // if (method === 'Assets.Register') {
+      //   tmp = rpcDataToReturn.registerAssets;
+      //   tmp.id = data.id;
+      //   stream.write(JSON.stringify(tmp) + String.fromCharCode(10));
+      //   return;
+      // }
 
-      if (method === 'Bitmarks.Issue') {
-        tmp = rpcDataToReturn.issueBitmarks;
+      // if (method === 'Bitmarks.Issue') {
+      //   tmp = rpcDataToReturn.issueBitmarks;
+      //   tmp.id = data.id;
+      //   stream.write(JSON.stringify(tmp) + String.fromCharCode(10));
+      //   return;
+      // }
+
+      if (method === 'Bitmarks.Create') {
+        tmp = rpcDataToReturn.createBitmarks;
         tmp.id = data.id;
         stream.write(JSON.stringify(tmp) + String.fromCharCode(10));
         return;
@@ -153,18 +155,23 @@ var pk1 = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm
 var pk2 = PrivateKey.fromKIF('ddZdMwNbSoAKV72w5EHAfhJMShN9JphvSgpdAhWu7JYmEAeiQm');
 var asset1 = new Asset()
       .setName('Test Bitmark Lib')
-      .setDescription('Asset description')
+      .addMetadata('description', 'this is description')
       .setFingerprint('Test Bitmark Lib 11')
       .sign(pk1);
 var asset2 = new Asset()
       .setName('Test Bitmark Lib')
-      .setDescription('Asset description')
+      .addMetadata('description', 'this is description')
       .setFingerprint('Test Bitmark Lib 12')
       .sign(pk2);
-var issue1 = new Issue();
-var issue2 = new Issue();
+var issue1 = new Issue()
+          .fromAsset(asset1)
+          .setNonce(1475482198529)
+          .sign(pk1);
+var issue2 = new Issue()
+          .fromAsset(asset2)
+          .setNonce(1475482198537)
+          .sign(pk2);
 var transfer1 = new Transfer();
-var transfer2 = new Transfer();
 var issuePayId, issuePayNonce, issueDifficulty;
 var transferPayId, transferPayments;
 
@@ -172,28 +179,14 @@ var transferPayId, transferPayments;
 describe('Supporting API', function() {
   this.timeout(15000);
   var pool = new Pool([], 'api_handling_testnet');
-  it('should support registering asset', function(done) {
-    pool.registerAssets([asset1, asset2], function(error, data) {
-      expect(asset1.getId()).to.equal(rpcDataToReturn.registerAssets.result.assets[0].index);
-      expect(asset2.getId()).to.equal(rpcDataToReturn.registerAssets.result.assets[1].index);
-      expect(error).to.equal.null;
-      done();
-    });
-  });
-  it('should support issuing bitmarks', function(done) {
-    issue1.fromAsset(asset1)
-          .setNonce(1475482198529)
-          .sign(pk1);
-    issue2.fromAsset(asset2)
-          .setNonce(1475482198537)
-          .sign(pk2);
-    pool.issueBitmarks([issue1, issue2], function(error, data, paymentInfo) {
+  it('should support create bitmarks', function(done) {
+    pool.createBitmarks([asset1, asset2], [issue1, issue2], function(error, data, paymentInfo) {
       issuePayId = paymentInfo.payId;
       issuePayNonce = paymentInfo.payNonce;
       issueDifficulty = paymentInfo.difficulty;
-      expect(issuePayId).to.equal(rpcDataToReturn.issueBitmarks.result.payId);
-      expect(issuePayNonce).to.equal(rpcDataToReturn.issueBitmarks.result.payNonce);
-      expect(issueDifficulty).to.equal(rpcDataToReturn.issueBitmarks.result.difficulty);
+      expect(issuePayId).to.equal(rpcDataToReturn.createBitmarks.result.payId);
+      expect(issuePayNonce).to.equal(rpcDataToReturn.createBitmarks.result.payNonce);
+      expect(issueDifficulty).to.equal(rpcDataToReturn.createBitmarks.result.difficulty);
       expect(error).to.equal.null;
       done();
     });

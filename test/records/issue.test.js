@@ -29,16 +29,14 @@ describe('Issue', function(){
     assetPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     assetWithoutId = new Asset()
                 .setName('Test Bitmark Lib')
-                .setDescription('Asset description')
-                .setFingerprint('Test Bitmark Lib 11')
-                .sign(assetPk);
+                .addMetadata('description', 'this is description')
+                .setFingerprint('Test Bitmark Lib 11');
 
     assetWithId = new Asset()
                 .setName('this is name')
-                .setDescription('this is description')
+                .addMetadata('description', 'this is description')
                 .setFingerprint('Test Bitmark Lib 11')
                 .sign(assetPk);
-    assetWithId._id = '3e6e66b398030966f087347d447ea0d35133099a247d0dd9bfec29ac2f853d20de6ac10a8e5348ab7bdf16f8633780365e7ea62a39b5ab8c490dedd8573b3dc1';
 
     issueNonce = 1475482198529;
     issuePk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');

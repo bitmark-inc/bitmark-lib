@@ -31,15 +31,13 @@ describe('Transfer', function(){
     assetPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     asset = new Asset()
                 .setName('Test Bitmark Lib')
-                .setDescription('Asset description')
+                .addMetadata('description', 'this is description')
                 .setFingerprint('Test Bitmark Lib 11')
                 .sign(assetPk);
-    asset._id = '3e6e66b398030966f087347d447ea0d35133099a247d0dd9bfec29ac2f853d20de6ac10a8e5348ab7bdf16f8633780365e7ea62a39b5ab8c490dedd8573b3dc1';
 
     issuePk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
-    issueWithoutId = new Issue().fromAsset(asset).setNonce(1475482198529).sign(issuePk);
+    issueWithoutId = new Issue().fromAsset(asset).setNonce(1475482198529);
     issueWithId = new Issue().fromAsset(asset).setNonce(1475482198529).sign(issuePk);
-    issueWithId._txId = '933890e98221e04eee661b3d889fcc5c1ec512ee636d8991f030351f76af456e';
 
     transferPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     wrongTransferPk = PrivateKey.fromKIF('ddZdMwNbSoAKV72w5EHAfhJMShN9JphvSgpdAhWu7JYmEAeiQm');

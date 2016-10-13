@@ -31,9 +31,10 @@ function makeRandomString(length) {
 }
 
 var maxName = config.record.asset.max_name;
-var maxDescription = config.record.asset.max_description;
+var maxMetadata = config.record.asset.max_metadata;
 var maxFingerprint = config.record.asset.max_fingerprint;
 var pk = new PrivateKey('testnet');
+var metadataSeparator = String.fromCharCode(parseInt('\u0000',16));
 
 describe('Asset', function(){
   it('should throw error on too long name', function(){
@@ -41,9 +42,68 @@ describe('Asset', function(){
       return new Asset().setName(makeRandomString(maxName+1));
     }).to.throw(Error);
   });
-  it('should throw error on too long description', function(){
-    expect(function(){
-      return new Asset().setDescription(makeRandomString(maxDescription+1));
+  it('should be able to check for valid metadata', function() {
+    var key = makeRandomString(10);
+    var invalidValue = makeRandomString(makeRandomString(maxMetadata - 10));
+    var invalidData = {};
+    invalidData[key] = invalidValue;
+    expect(Asset.isValidMetadata(invalidData)).to.equal.false;
+
+    var validValue = makeRandomString(makeRandomString(maxMetadata - 11));
+    var validData = {};
+    validData[key] = validValue;
+    expect(Asset.isValidMetadata(validData)).to.equal.true;
+  });
+  it('should allow to setMetadata if the data is valid', function() {
+    var asset1 = new Asset().setName(makeRandomString(maxName));
+    var invalidMetadata = {};
+    invalidMetadata[makeRandomString(10)] = makeRandomString(10);
+    invalidMetadata[makeRandomString(10)] = makeRandomString(maxMetadata - 33 + 1);
+    expect(function() { return asset1.setMetadata(invalidMetadata); }).to.throw(Error);
+
+    var asset2 = new Asset().setName(makeRandomString(maxName));
+    var validMetadata = {};
+    validMetadata[makeRandomString(10)] = makeRandomString(10);
+    validMetadata[makeRandomString(10)] = makeRandomString(maxMetadata - 33);
+    expect(function() { return asset2.setMetadata(validMetadata); }).to.not.throw(Error);
+    expect(asset2.getMetadata()).to.deep.equal(validMetadata);
+  });
+  it('should allow to import the metadata string if it is valid', function() {
+    var tooLongMetadataString = makeRandomString(10) +
+                                  metadataSeparator +
+                                  makeRandomString(maxMetadata-10);
+    var unparsableMetadataString = makeRandomString(10) +
+                                    metadataSeparator +
+                                    makeRandomString(10) +
+                                    metadataSeparator +
+                                    makeRandomString(10);
+    expect(function() { return new Asset().importMetadata(tooLongMetadataString); }).to.throw(Error);
+    expect(function() { return new Asset().importMetadata(unparsableMetadataString); }).to.throw(Error);
+
+    var validMetadataString = makeRandomString(10) +
+                              metadataSeparator +
+                              makeRandomString(10) +
+                              metadataSeparator +
+                              makeRandomString(10) +
+                              metadataSeparator +
+                              makeRandomString(10);
+    expect(function() { return new Asset().importMetadata(validMetadataString); }).to.not.throw(Error);
+  });
+  it('should allow to add and remove metadata key value pair', function() {
+    var asset = new Asset().setMetadata({
+      key1: 'value1'
+    });
+    asset.addMetadata('key2', 'value2');
+    expect(asset.getMetadata()).to.deep.equal({
+      key1: 'value1',
+      key2: 'value2'
+    });
+
+    asset.removeMetadata('key1');
+    expect(asset.getMetadata()).to.deep.equal({ key2: 'value2' });
+
+    expect(function() {
+      return asset.addMetadata('key3', makeRandomString(maxMetadata));
     }).to.throw(Error);
   });
   it('should throw error on too long fingerprint', function(){
@@ -78,14 +138,14 @@ describe('Asset', function(){
   var data = {
     pk: PrivateKey.fromKIF('Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr'),
     name: 'this is name',
-    description: 'this is description',
+    metadata: 'description' + metadataSeparator +'this is description',
     fingerprint: '5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c',
-    signature: 'b90e2c714ec0a0da5470c4269da53278eca3ff02219d29c12d144d9c3e2989247325bf7ca9d22253019354b976277f81e96410bcbabb1428264223966fbfa200'
+    signature: '2028900a6ddebce59e29fb41c27b45be57a07177927b24e46662e007ecad066399e87f4dec4eecb45599e9e9186497374978595a36f908b4fed9a51145b6e803'
   };
   it('should be able to generate the right signature for the record', function(){
     var asset = new Asset()
                   .setName(data.name)
-                  .setDescription(data.description)
+                  .importMetadata(data.metadata)
                   .setFingerprint(data.fingerprint)
                   .sign(data.pk);
     expect(asset.getSignature().toString('hex')).to.equal(data.signature);
@@ -94,12 +154,12 @@ describe('Asset', function(){
     var asset = new Asset();
     expect(asset.isSigned()).to.not.be.ok;
     asset.setName(data.name)
-      .setDescription(data.description)
+      .importMetadata(data.metadata)
       .setFingerprint(data.fingerprint)
       .sign(data.pk);
     expect(asset.isSigned()).to.be.ok;
     expect(asset.getName()).to.equal(data.name);
-    expect(asset.getDescription()).to.equal(data.description);
+    expect(asset.getMetadata()).to.deep.equal({description: 'this is description'});
     expect(asset.getFingerprint()).to.equal(data.fingerprint);
     expect(asset.getRegistrant().toString()).to.equal(data.pk.getAddress().toString());
     expect(asset.getSignature().toString('hex')).to.equal(data.signature);
