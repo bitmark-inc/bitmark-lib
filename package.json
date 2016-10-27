@@ -1,6 +1,6 @@
 {
   "name": "bitmark-lib",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bitmark library",
   "main": "index.js",
   "directories": {
@@ -35,7 +35,7 @@
     "js-sha3": "^0.5.4",
     "lodash": "^4.6.1",
     "node-uuid": "^1.4.7",
-    "tweetnacl-nodewrap": "^0.1.8"
+    "tweetnacl-nodewrap": "^0.1.9"
   },
   "devDependencies": {
     "chai": "^3.5.0",
