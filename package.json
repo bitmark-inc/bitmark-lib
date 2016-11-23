@@ -34,8 +34,8 @@
     "bs58": "^3.0.0",
     "js-sha3": "^0.5.4",
     "lodash": "^4.6.1",
-    "node-uuid": "^1.4.7",
-    "tweetnacl-nodewrap": "^0.1.9"
+    "tweetnacl-nodewrap": "^0.1.9",
+    "uuid": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
