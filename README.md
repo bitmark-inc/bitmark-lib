@@ -137,7 +137,7 @@ To instantiate an Asset record object:
 ```javascript
 var asset = new Asset()
       .setName('Asset name')
-      .setDescription('Asset description')
+      .addMetadata('description', 'this is asset description')
       .setFingerprint('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44')
       .sign(privateKey);
 ```
@@ -146,7 +146,11 @@ var asset = new Asset()
 * *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the asset record is signed
 * *getName()* — returns the string value for an Asset's *Name* property
-* *getDescription()* — returns the string value for an Asset's *Description* property
+* *setMetadata(jsonMetadata)* - set the metadata for the asset
+* *importMetadata(stringMetadata)* - set the metadata in string format
+* *addMetadata(key, value)* - add the metadata to existing metadata set of the asset
+* *removeMetadata(key)* - remove a specific metadata from existing metadata set
+* *getMetadata()* - get the json metadata
 * *getFingerprint()* — returns the hexadecimal value for an Asset's *Fingerprint* property
 * *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property
 * *getSignature()* — returns the Asset object's signature buffer
@@ -181,7 +185,6 @@ Note: `fromAsset()` can receive either an Asset object or an *asset-id* string.
 * *getOwner()* — returnss an Address object specifying the Issue record's *Owner* property
 * *getSignature()* — returns the Issue object's signature buffer
 * *getAsset()*: returns the Issue record's corresponding *AssetIndex* as a string value
-* *getPaymentAddress()* — only available when the record is broadcast via RPC
 * *getTxId()* — returns a hexadecimal string id for the Issue record (only available when the record is broadcast via RPC)
 
 
@@ -215,7 +218,6 @@ Note: `from()` can receive either an Issue or Transfer object *or* an id string 
 * *getOwner()* —  returnss an Address object specifying the the Transfer record's *Owner* property
 * *getSignature()*: returns the Transfer object's signature buffer
 * *getPreTx()*: returns a hexadecimal string of a *TxId* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
-* *getPaymentAddress()* — only available when the record is broadcast via RPC
 * *getTxId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
 
 ---
