@@ -1,12 +1,12 @@
 global.__baseBitmarkLibModulePath = __dirname + '/';
 module.exports = exports = {
-  Address: require('./lib/address.js'),
-  PrivateKey: require('./lib/private-key.js'),
+  Seed: require('./lib/seed.js'),
+  AccountNumber: require('./lib/account-number.js'),
+  AuthKey: require('./lib/auth-key.js'),
   Asset: require('./lib/records/asset.js'),
   Issue: require('./lib/records/issue.js'),
   Transfer: require('./lib/records/transfer.js'),
 
-  RPCPool: require('./lib/rpc/pool.js'),
   config: require('./lib/config.js'),
   networks: require('./lib/networks.js'),
 

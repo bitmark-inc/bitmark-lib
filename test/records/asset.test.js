@@ -1,12 +1,11 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
 var lib = require('../../index.js');
+var AuthKey = lib.AuthKey;
+var Asset = lib.Asset;
 
-var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
-var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
-
-var PrivateKey = require(__baseBitmarkLibModulePath + 'lib/private-key.js');
-var Asset = require(__baseBitmarkLibModulePath + 'lib/records/asset.js');
+var config = require(global.__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(global.__baseBitmarkLibModulePath + 'lib/util/common.js');
 
 /**
  * ****  CREATING ASSET
@@ -14,7 +13,7 @@ var Asset = require(__baseBitmarkLibModulePath + 'lib/records/asset.js');
  *   .setName(name)
  *   .setDescription(description)
  *   .setFingerprint(fingerprint)
- *   .sign(privateKey);
+ *   .sign(authKey);
  *
  * **** Util
  * asset.getRPCMessage()
@@ -33,7 +32,7 @@ function makeRandomString(length) {
 var maxName = config.record.asset.max_name;
 var maxMetadata = config.record.asset.max_metadata;
 var maxFingerprint = config.record.asset.max_fingerprint;
-var pk = new PrivateKey('testnet');
+var pk = new AuthKey('testnet');
 var metadataSeparator = String.fromCharCode(parseInt('\u0000',16));
 
 describe('Asset', function(){
@@ -136,7 +135,7 @@ describe('Asset', function(){
     }).to.not.throw(Error);
   });
   var data = {
-    pk: PrivateKey.fromKIF('Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr'),
+    pk: AuthKey.fromKIF('Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr'),
     name: 'this is name',
     metadata: 'description' + metadataSeparator +'this is description',
     fingerprint: '5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c',
@@ -161,7 +160,7 @@ describe('Asset', function(){
     expect(asset.getName()).to.equal(data.name);
     expect(asset.getMetadata()).to.deep.equal({description: 'this is description'});
     expect(asset.getFingerprint()).to.equal(data.fingerprint);
-    expect(asset.getRegistrant().toString()).to.equal(data.pk.getAddress().toString());
+    expect(asset.getRegistrant().toString()).to.equal(data.pk.getAccountNumber().toString());
     expect(asset.getSignature().toString('hex')).to.equal(data.signature);
   });
   it('should return Asset instance when initiating without `new` keyword', function(){

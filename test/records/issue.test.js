@@ -1,13 +1,12 @@
 var chai = chai || require('chai');
 var expect = chai.expect;
 var lib = require('../../index.js');
+var AuthKey = lib.AuthKey;
+var Asset = lib.Asset;
+var Issue = lib.Issue;
 
-var config = require(__baseBitmarkLibModulePath + 'lib/config.js');
-var common = require(__baseBitmarkLibModulePath + 'lib/util/common.js');
-
-var PrivateKey = require(__baseBitmarkLibModulePath + 'lib/private-key.js');
-var Asset = require(__baseBitmarkLibModulePath + 'lib/records/asset.js');
-var Issue = require(__baseBitmarkLibModulePath + 'lib/records/issue.js');
+var config = require(global.__baseBitmarkLibModulePath + 'lib/config.js');
+var common = require(global.__baseBitmarkLibModulePath + 'lib/util/common.js');
 
 /**
  * ****  CREATING ISSUE
@@ -26,7 +25,7 @@ describe('Issue', function(){
   var issueNonce, issuePk, issueSignature;
 
   before(function(){
-    assetPk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
+    assetPk = AuthKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     assetWithoutId = new Asset()
                 .setName('Test Bitmark Lib')
                 .addMetadata('description', 'this is description')
@@ -39,7 +38,7 @@ describe('Issue', function(){
                 .sign(assetPk);
 
     issueNonce = 1475482198529;
-    issuePk = PrivateKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
+    issuePk = AuthKey.fromKIF('ce5MNS5PwvZ1bo5cU9Fex7He2tMpFP2Q42ToKZTBEBdA5f4dXm');
     issueSignature = 'ea32dbdd484159d5dffb37a7d62282e85f83e478594acbdbf2254a81c4efae9f9c869fee52c652d40700b57da09f5a677058a441937976cd0f65b2e32f61cb0a';
   });
 
@@ -92,7 +91,7 @@ describe('Issue', function(){
   it('getters should return right result', function(){
     var issue = new Issue().fromAsset(assetWithId).setNonce(issueNonce).sign(issuePk);
     expect(issue.isSigned()).to.equal(true);
-    expect(issue.getOwner().toString()).to.equal(issuePk.getAddress().toString());
+    expect(issue.getOwner().toString()).to.equal(issuePk.getAccountNumber().toString());
     expect(issue.getSignature().toString('hex')).to.equal(issueSignature);
     expect(issue.getAsset()).to.equal(assetWithId.getId());
   });

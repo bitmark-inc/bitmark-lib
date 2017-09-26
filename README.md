@@ -24,34 +24,34 @@ var bitmarkLib = require('bitmark-lib');
 #### Set up
 
 ```javascript
-var PrivateKey = bitmarkLib.PrivateKey;
+var AuthKey = bitmarkLib.AuthKey;
 ```
 
 #### Instantiate
 
-To instatiate a PrivateKey object:
+To instatiate a AuthKey object:
 
 ```javascript
-var privateKey01 = new PrivateKey();
+var privateKey01 = new AuthKey();
 ```
 
-There are 2 optional parameters for the PrivateKey constructor: *network* and *key type*. The default for *network* is `livenet`, and the default for *key type* is `ed25519`.
+There are 2 optional parameters for the AuthKey constructor: *network* and *key type*. The default for *network* is `livenet`, and the default for *key type* is `ed25519`.
 
 ```javascript
-var privateKey02 = new PrivateKey('testnet');
-var privateKey03 = new PrivateKey('livenet', 'ed25519');
+var privateKey02 = new AuthKey('testnet');
+var privateKey03 = new AuthKey('livenet', 'ed25519');
 ```
 
 To parse the private key from the KIF string:
 
 ```javascript
-var privateKey = PrivateKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
+var privateKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
 ```
 
 To parse the private key from buffer:
 
 ```javascript
-var privateKey = PrivateKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
+var privateKey = AuthKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
 ```
 
 The buffer can be either a hexadecimal string or a Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
@@ -62,53 +62,53 @@ The buffer can be either a hexadecimal string or a Buffer object. For ed25519, w
 * *toKIF()* — returns the private key in KIF format.
 * *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
 * *getType()* — returns the key type (currently only `ed25519`)
-* *getAddress()* — returns an Address object (see next section)
+* *getAccountNumber()* — returns an AccountNumber object (see next section)
 
 ---
 
-## Address
+## AccountNumber
 
 #### Set up
 
 ```javascript
-var Address = bitmarkLib.Address;
+var AccountNumber = bitmarkLib.AccountNumber;
 ```
 
 #### Instantiate
 
-To instatiate an Address object from an address string:
+To instatiate an AccountNumber object from an address string:
 
 ```javascript
-var address = new Address('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
-var sameAddress = Address.fromString('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
+var address = new AccountNumber('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
+var sameAccountNumber = AccountNumber.fromString('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
 ```
 
-To instantiate an Address object from a Buffer object:
+To instantiate an AccountNumber object from a Buffer object:
 
 ```javascript
 var buffer = new Buffer('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44', 'hex');
-var address = new Address(buffer, 'testnet', 'ed25519');
-var sameAddress01 = Address.fromBuffer(buffer, 'testnet', 'ed25519');
-var sameAddress02 = Address.froMBuffer('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44', 'testnet', 'ed25519');
+var address = new AccountNumber(buffer, 'testnet', 'ed25519');
+var sameAccountNumber01 = AccountNumber.fromBuffer(buffer, 'testnet', 'ed25519');
+var sameAccountNumber02 = AccountNumber.froMBuffer('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44', 'testnet', 'ed25519');
 ```
 
 Note:
 * `network` and `keytype` are optional, the defaults are `livenet` and `ed25519`.
-* When instantiating a Address from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
+* When instantiating a AccountNumber from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
 
-To instantiate an Address object from a PrivateKey:
+To instantiate an AccountNumber object from a AuthKey:
 
 ```javascript
-var privateKey = PrivateKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
-var address = privateKey.getAddress()
+var privateKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
+var address = privateKey.getAccountNumber()
 ```
 
 #### Validation
 
 ```javascript
-Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;'); // returns false because of bad address string
-Address.isValid('ayUWeSeJEcATAHQTBU1qkVcEh9V12cnfCeFWAh1Jq7NdVMjH5q', 'testnet'); // returns false because of wrong network
-Address.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet'); // returns true
+AccountNumber.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;'); // returns false because of bad address string
+AccountNumber.isValid('ayUWeSeJEcATAHQTBU1qkVcEh9V12cnfCeFWAh1Jq7NdVMjH5q', 'testnet'); // returns false because of wrong network
+AccountNumber.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet'); // returns true
 ```
 
 #### Methods
@@ -152,7 +152,7 @@ var asset = new Asset()
 * *removeMetadata(key)* - remove a specific metadata from existing metadata set
 * *getMetadata()* - get the json metadata
 * *getFingerprint()* — returns the hexadecimal value for an Asset's *Fingerprint* property
-* *getRegistrant()* — returns an Address object specifying the Asset's *Registrant* property
+* *getRegistrant()* — returns an AccountNumber object specifying the Asset's *Registrant* property
 * *getSignature()* — returns the Asset object's signature buffer
 * *getId()* — returns the Asset object's 'AssetIndex' as a string value (only available when the record is broadcast via RPC)
 * *getTxId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
@@ -182,7 +182,7 @@ Note: `fromAsset()` can receive either an Asset object or an *asset-id* string.
 #### Methods
 * *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the issue record is signed
-* *getOwner()* — returnss an Address object specifying the Issue record's *Owner* property
+* *getOwner()* — returnss an AccountNumber object specifying the Issue record's *Owner* property
 * *getSignature()* — returns the Issue object's signature buffer
 * *getAsset()*: returns the Issue record's corresponding *AssetIndex* as a string value
 * *getTxId()* — returns a hexadecimal string id for the Issue record (only available when the record is broadcast via RPC)
@@ -215,7 +215,7 @@ Note: `from()` can receive either an Issue or Transfer object *or* an id string 
 #### Methods
 * *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the transfer record is signed
-* *getOwner()* —  returnss an Address object specifying the the Transfer record's *Owner* property
+* *getOwner()* —  returnss an AccountNumber object specifying the the Transfer record's *Owner* property
 * *getSignature()*: returns the Transfer object's signature buffer
 * *getPreTx()*: returns a hexadecimal string of a *TxId* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
 * *getTxId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
