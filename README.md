@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/bitmark-inc/bitmark-lib.svg?branch=master)](https://travis-ci.org/bitmark-inc/bitmark-lib)
 [![Coverage Status](https://coveralls.io/repos/bitmark-inc/bitmark-lib/badge.svg?branch=master)](https://coveralls.io/r/bitmark-inc/bitmark-lib?branch=master)
 
-The pure Javascript Bitmark library for node.js and browsers.
-
 # Install
 
 ```sh
@@ -19,6 +17,44 @@ var bitmarkLib = require('bitmark-lib');
 
 # Usage
 
+## Seed
+
+Seed is where everything starts. From Seed we can generate auth key, encryption key, etc.
+
+To create a new random seed:
+
+```javascript
+var seed = new Seed();
+```
+
+There are 2 optional parameters for the Seed constructor: *network* and *version*. The default for *network* is `livenet`, and the only supported version now is 1.
+
+```javascript
+var seed = new Seed('testnet');
+var seed = new Seed('testnet', 1);
+```
+
+The seed could be represented in string format to import back later on
+```javascript
+var backup = seed.toString(); // using toBase58 is equivalent
+var restore = Seed.fromString(backup);
+var isValidSeedString = Seed.isValid(backup); // check whether a string is in valid format
+```
+
+Passing a counter to the seed, it will create a new 32 key
+```javascript
+var key = seed.generateKey(999);
+```
+Note: the counter 999 and 1000 are preserve to generate auth key and encryption key
+
+#### Methods
+* *generateKey(counter)* — returns 32 bytes in a Buffer object
+* *toString()* — returns the seed in string format
+* *toBase58()* — returns the seed in string format (same as `toString`)
+* *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
+* *getVersion()* — return version of the seed
+* *getCore()* — returns 32 bytes core data
+
 ## Private Key
 
 #### Set up
@@ -32,29 +68,34 @@ var AuthKey = bitmarkLib.AuthKey;
 To instatiate a AuthKey object:
 
 ```javascript
-var privateKey01 = new AuthKey();
+var authKey01 = new AuthKey();
 ```
 
 There are 2 optional parameters for the AuthKey constructor: *network* and *key type*. The default for *network* is `livenet`, and the default for *key type* is `ed25519`.
 
 ```javascript
-var privateKey02 = new AuthKey('testnet');
-var privateKey03 = new AuthKey('livenet', 'ed25519');
+var authKey02 = new AuthKey('testnet');
+var authKey03 = new AuthKey('livenet', 'ed25519');
 ```
 
 To parse the private key from the KIF string:
 
 ```javascript
-var privateKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
+var authKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
 ```
 
 To parse the private key from buffer:
 
 ```javascript
-var privateKey = AuthKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
+var authKey = AuthKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d390435e776821252e26c60fe96ba261d2f3942a33d2eaea2391dfb662de79bc0c4ef53521ce8b11c20', 'testnet', 'ed25519');
 ```
 
 The buffer can be either a hexadecimal string or a Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
+
+To create the auth key from the seed
+```javascript
+var authKey = AuthKey.fromSeed(new Seed());
+```
 
 #### Methods
 * *toBuffer()* — returns a Buffer object containing the private key
@@ -99,8 +140,8 @@ Note:
 To instantiate an AccountNumber object from a AuthKey:
 
 ```javascript
-var privateKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
-var address = privateKey.getAccountNumber()
+var authKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
+var address = authKey.getAccountNumber()
 ```
 
 #### Validation
@@ -139,11 +180,10 @@ var asset = new Asset()
       .setName('Asset name')
       .addMetadata('description', 'this is asset description')
       .setFingerprint('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44')
-      .sign(privateKey);
+      .sign(authKey);
 ```
 
 #### Methods
-* *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the asset record is signed
 * *getName()* — returns the string value for an Asset's *Name* property
 * *setMetadata(jsonMetadata)* - set the metadata for the asset
@@ -155,7 +195,7 @@ var asset = new Asset()
 * *getRegistrant()* — returns an AccountNumber object specifying the Asset's *Registrant* property
 * *getSignature()* — returns the Asset object's signature buffer
 * *getId()* — returns the Asset object's 'AssetIndex' as a string value (only available when the record is broadcast via RPC)
-* *getTxId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
+* *getId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
 
 
 ### Issue Record
@@ -174,18 +214,17 @@ To instatiate an Issue record object:
 var issue = new Issue()
       .fromAsset(asset)
       .setNonce(1)
-      .sign(privateKey);
+      .sign(authKey);
 ```
 
 Note: `fromAsset()` can receive either an Asset object or an *asset-id* string.
 
 #### Methods
-* *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the issue record is signed
 * *getOwner()* — returnss an AccountNumber object specifying the Issue record's *Owner* property
 * *getSignature()* — returns the Issue object's signature buffer
 * *getAsset()*: returns the Issue record's corresponding *AssetIndex* as a string value
-* *getTxId()* — returns a hexadecimal string id for the Issue record (only available when the record is broadcast via RPC)
+* *getId()* — returns a hexadecimal string id for the Issue record (only available when the record is broadcast via RPC)
 
 
 ---
@@ -207,18 +246,17 @@ To instatiate a Transfer record object:
 var transfer = new Transfer()
       .from(previousTransfer)
       .to(newOwner)
-      .sign(privateKey);
+      .sign(authKey);
 ```
 
 Note: `from()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object. 
 
 #### Methods
-* *getRPCParam()* — returns a json object for sending in an RPC message
 * *isSigned()* — returns `true` if the transfer record is signed
 * *getOwner()* —  returnss an AccountNumber object specifying the the Transfer record's *Owner* property
 * *getSignature()*: returns the Transfer object's signature buffer
-* *getPreTx()*: returns a hexadecimal string of a *TxId* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
-* *getTxId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
+* *getPreTx()*: returns a hexadecimal string of a *Id* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
+* *getId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
 
 ---
 
