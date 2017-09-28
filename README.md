@@ -19,7 +19,16 @@ var bitmarkLib = require('bitmark-lib');
 
 ## Seed
 
-Seed is where everything starts. From Seed we can generate auth key, encryption key, etc.
+#### Set up
+
+```javascript
+var Seed = bitmarkLib.Seed;
+```
+
+Seed is where everything starts for an entity which wants to use bitmark services.
+A seed is used to generate:
+1. auth key: for authentication of transactions (issue or transfer)
+2. encryption key: for encryption of assets
 
 To create a new random seed:
 
@@ -34,26 +43,28 @@ var seed = new Seed('testnet');
 var seed = new Seed('testnet', 1);
 ```
 
-The seed could be represented in string format to import back later on
+Losing the seed means losing the control over bitmarks and assets of the entity.
+Thus, a seed should be backed up by using its string format in a secure place, and be imported when there are operations which require authentication or encryption.
+
 ```javascript
 var backup = seed.toString(); // using toBase58 is equivalent
 var restore = Seed.fromString(backup);
 var isValidSeedString = Seed.isValid(backup); // check whether a string is in valid format
 ```
 
-Passing a counter to the seed, it will create a new 32 key
+Passing a counter to the seed, it will create a new 32-byte secret key
 ```javascript
 var key = seed.generateKey(999);
 ```
-Note: the counter 999 and 1000 are preserve to generate auth key and encryption key
+Note: the counter 999 and 1000 are preserved to generate auth key and encryption key
 
 #### Methods
 * *generateKey(counter)* — returns 32 bytes in a Buffer object
 * *toString()* — returns the seed in string format
-* *toBase58()* — returns the seed in string format (same as `toString`)
-* *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
-* *getVersion()* — return version of the seed
-* *getCore()* — returns 32 bytes core data
+* *toBase58()* — returns the seed in Base58 format (same as `toString`)
+* *getNetwork()* — returns the network of the seed, either `livenet` or `testnet`
+* *getVersion()* — returns the version of the seed
+* *getCore()* — returns the core of the seed, for keypair derivation
 
 ## Auth Key
 
@@ -65,7 +76,12 @@ var AuthKey = bitmarkLib.AuthKey;
 
 #### Instantiate
 
-To instatiate a AuthKey object:
+To create the auth key from a new seed:
+```javascript
+var authKey = AuthKey.fromSeed(new Seed());
+```
+
+To instantiate a AuthKey object:
 
 ```javascript
 var authKey01 = new AuthKey();
@@ -92,18 +108,13 @@ var authKey = AuthKey.fromBuffer('75d954e8f790ca792502148edfefed409d3da04b49443d
 
 The buffer can be either a hexadecimal string or a Buffer object. For ed25519, we can input a seed (32 bytes) or a full private key (64 bytes).
 
-To create the auth key from the seed
-```javascript
-var authKey = AuthKey.fromSeed(new Seed());
-```
-
 #### Methods
 * *toBuffer()* — returns a Buffer object containing the private key
 * *toString()* — returns *toBuffer()* in hexadecimal format
 * *toKIF()* — returns the private key in KIF format.
 * *getNetwork()* — returns either `livenet` or `testnet`, depending on the key
 * *getType()* — returns the key type (currently only `ed25519`)
-* *getAccountNumber()* — returns an AccountNumber object (see next section)
+* *getAccountNumber()* — returns an AccountNumber object (see the next section)
 
 ---
 
@@ -117,7 +128,14 @@ var AccountNumber = bitmarkLib.AccountNumber;
 
 #### Instantiate
 
-To instatiate an AccountNumber object from an account number string:
+To instantiate an AccountNumber object from an AuthKey:
+
+```javascript
+var authKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
+var accountNumber = authKey.getAccountNumber()
+```
+
+To instantiate an AccountNumber object from an account number string:
 
 ```javascript
 var accountNumber = new AccountNumber('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
@@ -136,13 +154,6 @@ var sameAccountNumber02 = AccountNumber.froMBuffer('73346e71883a09c0421e5d6caa47
 Note:
 * `network` and `keytype` are optional, the defaults are `livenet` and `ed25519`.
 * When instantiating a AccountNumber from a Buffer object using the constructor function, input the Buffer object instead of a hexadecimal string value.
-
-To instantiate an AccountNumber object from a AuthKey:
-
-```javascript
-var authKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
-var accountNumber = authKey.getAccountNumber()
-```
 
 #### Validation
 
@@ -194,8 +205,7 @@ var asset = new Asset()
 * *getFingerprint()* — returns the hexadecimal value for an Asset's *Fingerprint* property
 * *getRegistrant()* — returns an AccountNumber object specifying the Asset's *Registrant* property
 * *getSignature()* — returns the Asset object's signature buffer
-* *getId()* — returns the Asset object's 'AssetIndex' as a string value (only available when the record is broadcast via RPC)
-* *getId()* — returns the Asset object's transaction id (only available when the record is broadcasted via RPC)
+* *getId()* — returns the Asset object's 'AssetIndex' as a string value
 
 
 ### Issue Record
@@ -208,7 +218,7 @@ var Issue = bitmarkLib.Issue
 
 #### Instantiate
 
-To instatiate an Issue record object:
+To instantiate an Issue record object:
 
 ```javascript
 var issue = new Issue()
@@ -224,8 +234,7 @@ Note: `fromAsset()` can receive either an Asset object or an *asset-id* string.
 * *getOwner()* — returnss an AccountNumber object specifying the Issue record's *Owner* property
 * *getSignature()* — returns the Issue object's signature buffer
 * *getAsset()*: returns the Issue record's corresponding *AssetIndex* as a string value
-* *getId()* — returns a hexadecimal string id for the Issue record (only available when the record is broadcast via RPC)
-
+* *getId()* — returns a hexadecimal string id for the Issue record
 
 ---
 
@@ -240,7 +249,7 @@ var Transfer = bitmarkLib.Transfer
 #### Instantiate
 
 
-To instatiate a Transfer record object:
+To instantiate a Transfer record object:
 
 ```javascript
 var transfer = new Transfer()
@@ -249,14 +258,14 @@ var transfer = new Transfer()
       .sign(authKey);
 ```
 
-Note: `fromTx()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object. 
+Note: `fromTx()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object.
 
 #### Methods
 * *isSigned()* — returns `true` if the transfer record is signed
-* *getOwner()* —  returnss an AccountNumber object specifying the the Transfer record's *Owner* property
+* *getOwner()* —  returns an AccountNumber object specifying the the Transfer record's *Owner* property
 * *getSignature()*: returns the Transfer object's signature buffer
-* *getPreTxId()*: returns a hexadecimal string of a *Id* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
-* *getId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
+* *getPreTxId()*: returns a hexadecimal string of the *Id* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
+* *getId()* — returns a hexadecimal string id for the Transfer record
 
 ---
 
@@ -264,14 +273,16 @@ Note: `fromTx()` can receive either an Issue or Transfer object *or* an id strin
 
 ### Fingerprint
 
+#### Set up
+
 ```javascript
 var bitmarkLib = require('bitmark-lib');
 var fingerprint = bitmarkLib.util.fingeprint;
 ```
 
 #### Methods
-* *fromBuffer(Buffer)* - return a fingerprint string from buffer content
-* *fromString(string)* - return a fingerprint string from string content
+* *fromBuffer(Buffer)* - returns a fingerprint string from buffer content
+* *fromString(string)* - returns a fingerprint string from string content
 
 
 --
