@@ -1,6 +1,6 @@
 {
   "name": "bitmark-lib",
-  "version": "0.2.5",
+  "version": "1.0.0",
   "description": "Bitmark library",
   "main": "index.js",
   "directories": {
@@ -10,7 +10,7 @@
     "doc": "doc"
   },
   "scripts": {
-    "test": "_mocha \"./test/**/asset.test.js\"",
+    "test": "_mocha \"./test/**/*.test.js\"",
     "coverage": "./node_modules/istanbul/lib/cli.js cover _mocha \"./test/**/*.js\"",
     "coveralls": "npm run-script coverage && ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
@@ -29,12 +29,10 @@
   },
   "homepage": "https://github.com/bitmark-inc/bitmark-lib",
   "dependencies": {
-    "async": "^1.5.2",
     "bn.js": "^4.11.6",
     "bs58": "^3.0.0",
     "js-sha3": "^0.5.4",
     "lodash": "^4.6.1",
-    "node-uuid": "^1.4.7",
     "tweetnacl-nodewrap": "^0.1.9"
   },
   "devDependencies": {
