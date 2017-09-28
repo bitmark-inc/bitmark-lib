@@ -44,7 +44,7 @@ var seed = new Seed('testnet', 1);
 ```
 
 Losing the seed means losing the control over bitmarks and assets of the entity.
-Thus, a seed should be backed up by using its string format in a secure place, and be imported when there are operations which require authentication or encryption.
+Thus, a seed should be backed up by saving its string format in a secure place, and be imported when there are operations which require authentication or encryption.
 
 ```javascript
 var backup = seed.toString(); // using toBase58 is equivalent
