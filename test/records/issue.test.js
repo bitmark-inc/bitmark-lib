@@ -16,7 +16,6 @@ var common = require(global.__baseBitmarkLibModulePath + 'lib/util/common.js');
  *   .sign(key)
  *
  * **** Util
- * asset.getRPCMessage()
  * asset.toJSON()
  */
 
@@ -73,15 +72,18 @@ describe('Issue', function(){
       return new Issue().setNonce(0);
     }).to.not.throw();
   });
-  it('can not sign without asset and nonce', function(){
+  it('can not sign without asset', function(){
     expect(function(){
       return new Issue().setNonce(1).sign(issuePk);
     }).to.throw(Error);
     expect(function(){
-      return new Issue().fromAsset(assetWithId).sign(issuePk);
-    }).to.throw(Error);
-    expect(function(){
       return new Issue().fromAsset(assetWithId).setNonce(1).sign(issuePk);
+    }).to.not.throw();
+  });
+  it('randomize the nonce if not set', function() {
+    expect(function(){
+      var issue = new Issue().fromAsset(assetWithId).sign(issuePk);
+      expect(issue.toJSON().nonce > 0).to.be.true;
     }).to.not.throw();
   });
   it('produce the right signature', function(){
@@ -94,6 +96,12 @@ describe('Issue', function(){
     expect(issue.getOwner().toString()).to.equal(issuePk.getAccountNumber().toString());
     expect(issue.getSignature().toString('hex')).to.equal(issueSignature);
     expect(issue.getAsset()).to.equal(assetWithId.getId());
+    expect(issue.toJSON()).to.deep.equal({
+      owner: issuePk.getAccountNumber().toString(),
+      signature: issueSignature,
+      asset: assetWithId.getId(),
+      nonce: issueNonce
+    });
   });
   it('should return Issue instance when initiating without `new` keyword', function(){
     var issue = Issue().fromAsset(assetWithId).setNonce(issueNonce).sign(issuePk);

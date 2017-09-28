@@ -55,7 +55,7 @@ Note: the counter 999 and 1000 are preserve to generate auth key and encryption 
 * *getVersion()* — return version of the seed
 * *getCore()* — returns 32 bytes core data
 
-## Private Key
+## Auth Key
 
 #### Set up
 
@@ -117,10 +117,10 @@ var AccountNumber = bitmarkLib.AccountNumber;
 
 #### Instantiate
 
-To instatiate an AccountNumber object from an address string:
+To instatiate an AccountNumber object from an account number string:
 
 ```javascript
-var address = new AccountNumber('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
+var accountNumber = new AccountNumber('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
 var sameAccountNumber = AccountNumber.fromString('bxnT1iqAWFWM2MpSNGMHTq92Y27n81B3ep4vFcTpra4AEU9q7d');
 ```
 
@@ -128,7 +128,7 @@ To instantiate an AccountNumber object from a Buffer object:
 
 ```javascript
 var buffer = new Buffer('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44', 'hex');
-var address = new AccountNumber(buffer, 'testnet', 'ed25519');
+var accountNumber = new AccountNumber(buffer, 'testnet', 'ed25519');
 var sameAccountNumber01 = AccountNumber.fromBuffer(buffer, 'testnet', 'ed25519');
 var sameAccountNumber02 = AccountNumber.froMBuffer('73346e71883a09c0421e5d6caa473239c4438af71953295ad903fea410cabb44', 'testnet', 'ed25519');
 ```
@@ -141,21 +141,21 @@ To instantiate an AccountNumber object from a AuthKey:
 
 ```javascript
 var authKey = AuthKey.fromKIF('cELQPQoW2YDWBq37V6ZLnEiHDD46BG3tEvVmj6BpiCSvQwSszC');
-var address = authKey.getAccountNumber()
+var accountNumber = authKey.getAccountNumber()
 ```
 
 #### Validation
 
 ```javascript
-AccountNumber.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;'); // returns false because of bad address string
+AccountNumber.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUv;'); // returns false because of bad account number string
 AccountNumber.isValid('ayUWeSeJEcATAHQTBU1qkVcEh9V12cnfCeFWAh1Jq7NdVMjH5q', 'testnet'); // returns false because of wrong network
 AccountNumber.isValid('erxs7Li15xcioSpGLi1kPhA4vNvJSJYEUnTzU4oJ989coEuUvb', 'testnet'); // returns true
 ```
 
 #### Methods
 
-* *toString()* — returns the address as a string
-* *getNetwork()* — returns either `livenet` or `testnet`, depending on the address
+* *toString()* — returns the account number as a string
+* *getNetwork()* — returns either `livenet` or `testnet`, depending on the account number
 * *getPublicKey()* — returns the public key as a hexadecimal string value
 * *getKeyType()* — returns the key type (currently only `ed25519`)
 
@@ -244,25 +244,35 @@ To instatiate a Transfer record object:
 
 ```javascript
 var transfer = new Transfer()
-      .from(previousTransfer)
-      .to(newOwner)
+      .fromTx(previousTransfer)
+      .toAccountNumber(newOwner)
       .sign(authKey);
 ```
 
-Note: `from()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object. 
+Note: `fromTx()` can receive either an Issue or Transfer object *or* an id string from either an Issue or Transfer object. 
 
 #### Methods
 * *isSigned()* — returns `true` if the transfer record is signed
 * *getOwner()* —  returnss an AccountNumber object specifying the the Transfer record's *Owner* property
 * *getSignature()*: returns the Transfer object's signature buffer
-* *getPreTx()*: returns a hexadecimal string of a *Id* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
+* *getPreTxId()*: returns a hexadecimal string of a *Id* for the previous record in the chain-of ownership (either an Issue record or Transfer record) — the same as a record's *Link* property in the blockchain data structure
 * *getId()* — returns a hexadecimal string id for the Transfer record (only available when the record is broadcast via RPC)
 
 ---
 
-## RPC
+## Utilities
 
-Under construction
+### Fingerprint
+
+```javascript
+var bitmarkLib = require('bitmark-lib');
+var fingerprint = bitmarkLib.util.fingeprint;
+```
+
+#### Methods
+* *fromBuffer(Buffer)* - return a fingerprint string from buffer content
+* *fromString(string)* - return a fingerprint string from string content
+
 
 --
 

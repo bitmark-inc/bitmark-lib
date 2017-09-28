@@ -31,6 +31,7 @@ function makeRandomString(length) {
 
 var maxName = config.record.asset.max_name;
 var maxMetadata = config.record.asset.max_metadata;
+var maxDescription = config.record.asset.max_description;
 var maxFingerprint = config.record.asset.max_fingerprint;
 var pk = new AuthKey('testnet');
 var metadataSeparator = String.fromCharCode(parseInt('\u0000',16));
@@ -66,6 +67,9 @@ describe('Asset', function(){
     validMetadata[makeRandomString(10)] = makeRandomString(maxMetadata - 33);
     expect(function() { return asset2.setMetadata(validMetadata); }).to.not.throw(Error);
     expect(asset2.getMetadata()).to.deep.equal(validMetadata);
+
+    var asset3 = new Asset().setName(makeRandomString(maxName));
+    expect(function() { return asset3.setMetadata("key", "value"); }).to.throw(Error);
   });
   it('should allow to import the metadata string if it is valid', function() {
     var tooLongMetadataString = makeRandomString(10) +
@@ -134,6 +138,7 @@ describe('Asset', function(){
               .sign(pk);
     }).to.not.throw(Error);
   });
+
   var data = {
     pk: AuthKey.fromKIF('Zjbm1pyA1zjpy5RTeHtBqSAr2NvErTxsovkbWs1duVy8yYG9Xr'),
     name: 'this is name',
@@ -141,27 +146,34 @@ describe('Asset', function(){
     fingerprint: '5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c',
     signature: '2028900a6ddebce59e29fb41c27b45be57a07177927b24e46662e007ecad066399e87f4dec4eecb45599e9e9186497374978595a36f908b4fed9a51145b6e803'
   };
+  var createValidAsset = function() {
+    return new Asset()
+      .setName(data.name)
+      .importMetadata(data.metadata)
+      .setFingerprint(data.fingerprint)
+      .sign(data.pk);
+  }
   it('should be able to generate the right signature for the record', function(){
-    var asset = new Asset()
-                  .setName(data.name)
-                  .importMetadata(data.metadata)
-                  .setFingerprint(data.fingerprint)
-                  .sign(data.pk);
+    var asset = createValidAsset();
     expect(asset.getSignature().toString('hex')).to.equal(data.signature);
   });
   it('getters should return correct result', function(){
     var asset = new Asset();
     expect(asset.isSigned()).to.not.be.ok;
-    asset.setName(data.name)
-      .importMetadata(data.metadata)
-      .setFingerprint(data.fingerprint)
-      .sign(data.pk);
+    asset = createValidAsset();
     expect(asset.isSigned()).to.be.ok;
     expect(asset.getName()).to.equal(data.name);
     expect(asset.getMetadata()).to.deep.equal({description: 'this is description'});
     expect(asset.getFingerprint()).to.equal(data.fingerprint);
     expect(asset.getRegistrant().toString()).to.equal(data.pk.getAccountNumber().toString());
     expect(asset.getSignature().toString('hex')).to.equal(data.signature);
+    expect(asset.toJSON()).to.deep.equal({
+      name: 'this is name',
+      metadata: 'description' + metadataSeparator +'this is description',
+      fingerprint: '5b071fe12fd7e624cac31b3d774715c11a422a3ceb160b4f1806057a3413a13c',
+      registrant: data.pk.getAccountNumber().toString(),
+      signature: '2028900a6ddebce59e29fb41c27b45be57a07177927b24e46662e007ecad066399e87f4dec4eecb45599e9e9186497374978595a36f908b4fed9a51145b6e803'
+    });
   });
   it('should return Asset instance when initiating without `new` keyword', function(){
     var asset = Asset();

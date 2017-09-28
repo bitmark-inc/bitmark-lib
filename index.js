@@ -15,5 +15,6 @@ module.exports = exports = {
     base58: require('./lib/util/base58.js'),
     binary: require('./lib/util/binary-packing.js'),
     varint: require('./lib/util/varint.js'),
+    fingerprint: require('./lib/util/fingerprint.js')
   }
 };
