@@ -1,0 +1,15 @@
+{
+  "name": "bitmark-lib-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "issue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "bitmark-lib": "git+https://github.com/bitmark-inc/bitmark-lib.git"
+  }
+}
