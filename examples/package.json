@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": ">=0.21.2",
     "bitmark-lib": "git+https://github.com/bitmark-inc/bitmark-lib.git"
   }
 }
